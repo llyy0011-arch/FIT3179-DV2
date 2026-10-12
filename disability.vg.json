@@ -1,0 +1,165 @@
+
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Comparison of disability prevalence by age group in Australia, 2003 and 2022.",
+  "title": {
+    "text": "How has disability prevalence changed across age groups?",
+    "subtitle": "Australia, 2003 vs 2022 | Disability prevalence (%)",
+    "anchor": "start",
+    "fontSize": 18,
+    "subtitleFontSize": 12
+  },
+  "data": {
+    "url": "Data/disability_prevalence.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "Year": "number",
+        "Proportion": "number"
+      }
+    }
+  },
+  "width": "container",
+  "height": 460,
+  "params": [
+    {
+      "name": "selectedSex",
+      "value": "All persons",
+      "bind": {
+        "input": "select",
+        "options": [
+          "All persons",
+          "Male",
+          "Female"
+        ],
+        "name": "Select sex: "
+      }
+    }
+  ],
+  "transform": [
+    {
+      "filter": "datum.Sex === selectedSex && (datum.Year === 2003 || datum.Year === 2022)"
+    },
+    {
+      "filter": "datum['Age group'] !== 'Total'"
+    }
+  ],
+  "encoding": {
+    "y": {
+      "field": "Age group",
+      "type": "ordinal",
+      "title": "Age group (years)",
+      "sort": [
+        "0–4",
+        "5–14",
+        "15–24",
+        "25–34",
+        "35–44",
+        "45–54",
+        "55–59",
+        "60–64",
+        "65–69",
+        "70–74",
+        "75–79",
+        "80–84",
+        "85–89",
+        "90 and over"
+      ],
+      "axis": {
+        "labelFontSize": 12
+      }
+    },
+    "x": {
+      "field": "Proportion",
+      "type": "quantitative",
+      "title": "Disability prevalence (%)",
+      "scale": {
+        "zero": true
+      },
+      "axis": {
+        "grid": true,
+        "labelFontSize": 12
+      }
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "line",
+        "stroke": "#A8B7C5",
+        "strokeWidth": 3
+      },
+      "encoding": {
+        "detail": {
+          "field": "Age group",
+          "type": "nominal"
+        },
+        "order": {
+          "field": "Year",
+          "type": "ordinal"
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "size": 120,
+        "stroke": "white",
+        "strokeWidth": 1
+      },
+      "encoding": {
+        "color": {
+          "field": "Year",
+          "type": "nominal",
+          "scale": {
+            "domain": [2003, 2022],
+            "range": [
+              "#F28E2B",
+              "#1877A3"
+            ]
+          },
+          "legend": {
+            "title": "Year",
+            "orient": "bottom",
+            "direction": "horizontal"
+          }
+        },
+        "tooltip": [
+          {
+            "field": "Sex",
+            "type": "nominal",
+            "title": "Sex"
+          },
+          {
+            "field": "Age group",
+            "type": "nominal",
+            "title": "Age group"
+          },
+          {
+            "field": "Year",
+            "type": "ordinal",
+            "title": "Year"
+          },
+          {
+            "field": "Proportion",
+            "type": "quantitative",
+            "title": "Prevalence (%)",
+            "format": ".1f"
+          }
+        ]
+      }
+    }
+  ],
+  "config": {
+    "view": {
+      "stroke": null
+    },
+    "font": "Arial",
+    "axis": {
+      "labelColor": "#34495E",
+      "titleColor": "#34495E"
+    }
+  }
+}
+

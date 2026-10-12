@@ -1,0 +1,253 @@
+﻿Sex,Age group,Year,Proportion
+Male,0–4,2003,4.7
+Male,0–4,2009,3.9
+Male,0–4,2012,3.7
+Male,0–4,2015,4.7
+Male,0–4,2018,4.8
+Male,0–4,2022,7.2
+Male,5–14,2003,12.4
+Male,5–14,2009,11.4
+Male,5–14,2012,11.2
+Male,5–14,2015,12
+Male,5–14,2018,12
+Male,5–14,2022,16.4
+Male,15–24,2003,8.9
+Male,15–24,2009,6.7
+Male,15–24,2012,7.8
+Male,15–24,2015,8.8
+Male,15–24,2018,9.2
+Male,15–24,2022,14.4
+Male,25–34,2003,11.7
+Male,25–34,2009,8.8
+Male,25–34,2012,8.5
+Male,25–34,2015,8.2
+Male,25–34,2018,7.1
+Male,25–34,2022,9.7
+Male,35–44,2003,14.5
+Male,35–44,2009,12.8
+Male,35–44,2012,11.2
+Male,35–44,2015,11.5
+Male,35–44,2018,9
+Male,35–44,2022,10.3
+Male,45–54,2003,21.6
+Male,45–54,2009,17.2
+Male,45–54,2012,17.5
+Male,45–54,2015,15.9
+Male,45–54,2018,15.6
+Male,45–54,2022,16.9
+Male,55–59,2003,28.7
+Male,55–59,2009,26.7
+Male,55–59,2012,26.4
+Male,55–59,2015,22.6
+Male,55–59,2018,23.4
+Male,55–59,2022,24.3
+Male,60–64,2003,40.6
+Male,60–64,2009,35
+Male,60–64,2012,32.5
+Male,60–64,2015,31.7
+Male,60–64,2018,27.2
+Male,60–64,2022,30.8
+Male,65–69,2003,42.6
+Male,65–69,2009,42.2
+Male,65–69,2012,39.9
+Male,65–69,2015,39.7
+Male,65–69,2018,37.3
+Male,65–69,2022,41.5
+Male,70–74,2003,49.5
+Male,70–74,2009,48.5
+Male,70–74,2012,43.5
+Male,70–74,2015,43.9
+Male,70–74,2018,43.7
+Male,70–74,2022,46.5
+Male,75–79,2003,60.1
+Male,75–79,2009,55.2
+Male,75–79,2012,56.2
+Male,75–79,2015,51.8
+Male,75–79,2018,55.5
+Male,75–79,2022,55.4
+Male,80–84,2003,72.9
+Male,80–84,2009,66.6
+Male,80–84,2012,66.7
+Male,80–84,2015,63.1
+Male,80–84,2018,63.1
+Male,80–84,2022,66.6
+Male,85–89,2003,75
+Male,85–89,2009,80.4
+Male,85–89,2012,77.1
+Male,85–89,2015,76.1
+Male,85–89,2018,71.9
+Male,85–89,2022,76.8
+Male,90 and over,2003,90.9
+Male,90 and over,2009,90
+Male,90 and over,2012,89.1
+Male,90 and over,2015,81.9
+Male,90 and over,2018,85.1
+Male,90 and over,2022,86.3
+Female,0–4,2003,3.9
+Female,0–4,2009,2.8
+Female,0–4,2012,3.5
+Female,0–4,2015,2.4
+Female,0–4,2018,2.7
+Female,0–4,2022,4.1
+Female,5–14,2003,7.5
+Female,5–14,2009,6.1
+Female,5–14,2012,6.2
+Female,5–14,2015,7
+Female,5–14,2018,7.1
+Female,5–14,2022,10.7
+Female,15–24,2003,9
+Female,15–24,2009,6.6
+Female,15–24,2012,8
+Female,15–24,2015,7.7
+Female,15–24,2018,9.5
+Female,15–24,2022,13.2
+Female,25–34,2003,9.7
+Female,25–34,2009,8.5
+Female,25–34,2012,8.9
+Female,25–34,2015,8.3
+Female,25–34,2018,7.2
+Female,25–34,2022,11.2
+Female,35–44,2003,13.9
+Female,35–44,2009,12.9
+Female,35–44,2012,11.7
+Female,35–44,2015,12.8
+Female,35–44,2018,10.6
+Female,35–44,2022,12.5
+Female,45–54,2003,21.5
+Female,45–54,2009,18.8
+Female,45–54,2012,18.6
+Female,45–54,2015,17
+Female,45–54,2018,16
+Female,45–54,2022,18.4
+Female,55–59,2003,31.9
+Female,55–59,2009,28.7
+Female,55–59,2012,25.6
+Female,55–59,2015,24.4
+Female,55–59,2018,20.5
+Female,55–59,2022,27.9
+Female,60–64,2003,37.1
+Female,60–64,2009,36.9
+Female,60–64,2012,33
+Female,60–64,2015,31.4
+Female,60–64,2018,27.1
+Female,60–64,2022,34.7
+Female,65–69,2003,38.6
+Female,65–69,2009,38
+Female,65–69,2012,39.2
+Female,65–69,2015,36
+Female,65–69,2018,35.5
+Female,65–69,2022,39.5
+Female,70–74,2003,49.8
+Female,70–74,2009,47.7
+Female,70–74,2012,44.7
+Female,70–74,2015,43.9
+Female,70–74,2018,40.4
+Female,70–74,2022,43.8
+Female,75–79,2003,57.2
+Female,75–79,2009,51.8
+Female,75–79,2012,55.2
+Female,75–79,2015,53.7
+Female,75–79,2018,52.6
+Female,75–79,2022,51.4
+Female,80–84,2003,68.6
+Female,80–84,2009,64.1
+Female,80–84,2012,66.5
+Female,80–84,2015,66.2
+Female,80–84,2018,63.5
+Female,80–84,2022,68.5
+Female,85–89,2003,78.9
+Female,85–89,2009,76.1
+Female,85–89,2012,79.9
+Female,85–89,2015,75
+Female,85–89,2018,75.2
+Female,85–89,2022,77.6
+Female,90 and over,2003,92.6
+Female,90 and over,2009,87.7
+Female,90 and over,2012,84.6
+Female,90 and over,2015,86.7
+Female,90 and over,2018,84.3
+Female,90 and over,2022,82.2
+All persons,0–4,2003,4.3
+All persons,0–4,2009,3.4
+All persons,0–4,2012,3.6
+All persons,0–4,2015,3.4
+All persons,0–4,2018,3.7
+All persons,0–4,2022,5.7
+All persons,5–14,2003,10
+All persons,5–14,2009,8.8
+All persons,5–14,2012,8.8
+All persons,5–14,2015,9.5
+All persons,5–14,2018,9.6
+All persons,5–14,2022,13.5
+All persons,15–24,2003,9
+All persons,15–24,2009,6.6
+All persons,15–24,2012,7.8
+All persons,15–24,2015,8.2
+All persons,15–24,2018,9.3
+All persons,15–24,2022,13.9
+All persons,25–34,2003,10.7
+All persons,25–34,2009,8.6
+All persons,25–34,2012,8.7
+All persons,25–34,2015,8.3
+All persons,25–34,2018,7.2
+All persons,25–34,2022,10.3
+All persons,35–44,2003,14.2
+All persons,35–44,2009,12.8
+All persons,35–44,2012,11.4
+All persons,35–44,2015,12.1
+All persons,35–44,2018,9.9
+All persons,35–44,2022,11.5
+All persons,45–54,2003,21.6
+All persons,45–54,2009,18
+All persons,45–54,2012,18.1
+All persons,45–54,2015,16.4
+All persons,45–54,2018,15.7
+All persons,45–54,2022,17.8
+All persons,55–59,2003,30.3
+All persons,55–59,2009,27.7
+All persons,55–59,2012,25.8
+All persons,55–59,2015,23.4
+All persons,55–59,2018,22
+All persons,55–59,2022,26.4
+All persons,60–64,2003,38.9
+All persons,60–64,2009,35.9
+All persons,60–64,2012,32.8
+All persons,60–64,2015,31.5
+All persons,60–64,2018,26.9
+All persons,60–64,2022,33.2
+All persons,65–69,2003,40.6
+All persons,65–69,2009,40.1
+All persons,65–69,2012,39.5
+All persons,65–69,2015,37.8
+All persons,65–69,2018,36.3
+All persons,65–69,2022,40.3
+All persons,70–74,2003,49.6
+All persons,70–74,2009,48.1
+All persons,70–74,2012,44.2
+All persons,70–74,2015,43.9
+All persons,70–74,2018,42.3
+All persons,70–74,2022,44.9
+All persons,75–79,2003,58.5
+All persons,75–79,2009,53.4
+All persons,75–79,2012,55.6
+All persons,75–79,2015,52.9
+All persons,75–79,2018,53.9
+All persons,75–79,2022,53.4
+All persons,80–84,2003,70.3
+All persons,80–84,2009,65.2
+All persons,80–84,2012,66.6
+All persons,80–84,2015,64.6
+All persons,80–84,2018,63.4
+All persons,80–84,2022,67.6
+All persons,85–89,2003,77.6
+All persons,85–89,2009,77.6
+All persons,85–89,2012,78.7
+All persons,85–89,2015,75.4
+All persons,85–89,2018,73.8
+All persons,85–89,2022,77.1
+All persons,90 and over,2003,92.1
+All persons,90 and over,2009,88.3
+All persons,90 and over,2012,85.9
+All persons,90 and over,2015,85.4
+All persons,90 and over,2018,84.6
+All persons,90 and over,2022,83.1

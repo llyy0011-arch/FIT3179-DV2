@@ -1,0 +1,99 @@
+
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Health service use among people with disability living in households, Australia, 2022.",
+  "title": {
+    "text": "How does healthcare use vary across age groups?",
+    "subtitle": "People with disability living in households, Australia, 2022",
+    "anchor": "start",
+    "fontSize": 18,
+    "subtitleFontSize": 12
+  },
+  "data": {
+    "url": "Data/access.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "Percentage": "number"
+      }
+    }
+  },
+  "width": "container",
+  "height": {
+    "step": 36
+  },
+  "transform": [
+    {
+      "filter": "isValid(datum.Percentage) && datum.Percentage >= 0"
+    },
+    {
+      "filter": "datum['Age group'] !== 'All ages' && datum.Service !== 'Total'"
+    }
+  ],
+  "mark": {
+    "type": "rect",
+    "stroke": "white",
+    "strokeWidth": 2
+  },
+  "encoding": {
+    "x": {
+      "field": "Age group",
+      "type": "ordinal",
+      "title": "Age group",
+      "axis": {
+        "labelAngle": 0,
+        "labelFontSize": 12
+      }
+    },
+    "y": {
+      "field": "Service",
+      "type": "nominal",
+      "title": "Health service",
+      "axis": {
+        "labelFontSize": 11,
+        "labelLimit": 260
+      }
+    },
+    "color": {
+      "field": "Percentage",
+      "type": "quantitative",
+      "title": "Used service (%)",
+      "scale": {
+        "scheme": "blues",
+        "domain": [0, 100]
+      },
+      "legend": {
+        "orient": "right"
+      }
+    },
+    "tooltip": [
+      {
+        "field": "Age group",
+        "type": "nominal",
+        "title": "Age group"
+      },
+      {
+        "field": "Service",
+        "type": "nominal",
+        "title": "Health service"
+      },
+      {
+        "field": "Percentage",
+        "type": "quantitative",
+        "title": "Used service (%)",
+        "format": ".1f"
+      },
+      {
+        "field": "CI",
+        "type": "nominal",
+        "title": "95% CI"
+      }
+    ]
+  },
+  "config": {
+    "view": {
+      "stroke": null
+    },
+    "font": "Arial"
+  }
+}

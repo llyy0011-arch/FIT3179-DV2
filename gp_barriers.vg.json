@@ -1,0 +1,180 @@
+
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Main reasons for unmet GP needs among people with disability in Australia, 2022.",
+  "title": {
+    "text": "Barriers to GP Care Among People with Disability",
+    "subtitle": "Main reason for unmet GP need, Australia, 2022 (%)",
+    "anchor": "start",
+    "fontSize": 19,
+    "subtitleFontSize": 13,
+    "offset": 18
+  },
+  "data": {
+    "url": "Data/GPBarriers.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "Percentage": "number"
+      }
+    }
+  },
+  "width": 720,
+  "height": 380,
+  "autosize": {
+    "type": "pad",
+    "contains": "padding"
+  },
+  "padding": {
+    "left": 15,
+    "right": 55,
+    "top": 15,
+    "bottom": 15
+  },
+  "params": [
+    {
+      "name": "selectedGroup",
+      "value": "All persons",
+      "bind": {
+        "input": "select",
+        "name": "Disability group: ",
+        "options": [
+          "All persons",
+          "Severe or profound disability(a)",
+          "Other disability status(b)",
+          "Sensory or speech",
+          "Learning and understanding",
+          "Physical",
+          "Psychosocial",
+          "Other"
+        ],
+        "labels": [
+          "All persons",
+          "Severe or profound disability",
+          "Other disability status",
+          "Sensory or speech",
+          "Learning and understanding",
+          "Physical",
+          "Psychosocial",
+          "Other disability group"
+        ]
+      }
+    }
+  ],
+  "transform": [
+    {
+      "filter": "datum['Population group'] === selectedGroup"
+    },
+    {
+      "filter": "datum.Reason !== 'Total' && isValid(datum.Percentage)"
+    },
+    {
+      "calculate": "datum.Reason === 'Waiting time too long / unavailable' ? 'Long waiting time' : datum.Reason === 'Transport or distance / physical access / language' ? 'Transport / access / language' : datum.Reason === 'Other (incl. upcoming appointment)' ? 'Other reasons' : datum.Reason",
+      "as": "ShortReason"
+    }
+  ],
+  "encoding": {
+    "y": {
+      "field": "ShortReason",
+      "type": "nominal",
+      "title": null,
+      "sort": "-x",
+      "axis": {
+        "labelFontSize": 13,
+        "labelLimit": 300,
+        "labelPadding": 12
+      }
+    },
+    "x": {
+      "field": "Percentage",
+      "type": "quantitative",
+      "title": "Percentage (%)",
+      "scale": {
+        "domain": [0, 60]
+      },
+      "axis": {
+        "grid": true,
+        "labelFontSize": 12,
+        "titleFontSize": 13,
+        "tickCount": 7
+      }
+    },
+    "tooltip": [
+      {
+        "field": "Population group",
+        "type": "nominal",
+        "title": "Disability group"
+      },
+      {
+        "field": "Reason",
+        "type": "nominal",
+        "title": "Reason"
+      },
+      {
+        "field": "Percentage",
+        "type": "quantitative",
+        "title": "Percentage (%)",
+        "format": ".1f"
+      },
+      {
+        "field": "CI",
+        "type": "nominal",
+        "title": "95% CI"
+      }
+    ]
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "rule",
+        "color": "#9CB7C9",
+        "strokeWidth": 3
+      },
+      "encoding": {
+        "x": {
+          "datum": 0
+        },
+        "x2": {
+          "field": "Percentage"
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "size": 180,
+        "color": "#1877A3",
+        "stroke": "white",
+        "strokeWidth": 1
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "middle",
+        "dx": 12,
+        "fontSize": 13,
+        "color": "#34495E"
+      },
+      "encoding": {
+        "text": {
+          "field": "Percentage",
+          "type": "quantitative",
+          "format": ".1f"
+        }
+      }
+    }
+  ],
+  "config": {
+    "view": {
+      "stroke": null
+    },
+    "font": "Arial",
+    "axis": {
+      "labelColor": "#34495E",
+      "titleColor": "#34495E"
+    }
+  }
+}

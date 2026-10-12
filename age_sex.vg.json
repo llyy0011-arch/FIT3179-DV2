@@ -1,0 +1,118 @@
+
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Disability prevalence by age group and sex in Australia, 2022.",
+  "title": {
+    "text": "How does disability prevalence differ by age and sex?",
+    "subtitle": "Australia, 2022 | Percentage of people with disability",
+    "anchor": "start",
+    "fontSize": 18,
+    "subtitleFontSize": 12
+  },
+  "data": {
+    "url": "Data/disability_prevalence.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "Year": "number",
+        "Proportion": "number"
+      }
+    }
+  },
+  "width": "container",
+  "height": 480,
+  "transform": [
+  {
+    "filter": "datum.Sex === 'Male' || datum.Sex === 'Female'"
+  }
+],
+  "mark": {
+    "type": "bar",
+    "cornerRadiusEnd": 2
+  },
+  "encoding": {
+    "y": {
+      "field": "Age group",
+      "type": "ordinal",
+      "title": "Age group (years)",
+      "sort": [
+        "0–4",
+        "5–14",
+        "15–24",
+        "25–34",
+        "35–44",
+        "45–54",
+        "55–59",
+        "60–64",
+        "65–69",
+        "70–74",
+        "75–79",
+        "80–84",
+        "85–89",
+        "90 and over"
+      ],
+      "axis": {
+        "labelFontSize": 12,
+        "titleFontSize": 13
+      }
+    },
+    "x": {
+      "field": "Proportion",
+      "type": "quantitative",
+      "title": "Disability prevalence (%)",
+      "scale": {
+        "zero": true
+      },
+      "axis": {
+        "labelFontSize": 12,
+        "titleFontSize": 13,
+        "grid": true
+      }
+    },
+    "yOffset": {
+      "field": "Sex",
+      "sort": ["Male", "Female"]
+    },
+    "color": {
+      "field": "Sex",
+      "type": "nominal",
+      "scale": {
+        "domain": ["Male", "Female"],
+        "range": ["#3279A8", "#E58D91"]
+      },
+      "legend": {
+        "title": "Sex",
+        "orient": "bottom",
+        "direction": "horizontal"
+      }
+    },
+    "tooltip": [
+      {
+        "field": "Age group",
+        "type": "nominal",
+        "title": "Age group"
+      },
+      {
+        "field": "Sex",
+        "type": "nominal",
+        "title": "Sex"
+      },
+      {
+        "field": "Proportion",
+        "type": "quantitative",
+        "title": "Prevalence (%)",
+        "format": ".1f"
+      }
+    ]
+  },
+  "config": {
+    "view": {
+      "stroke": null
+    },
+    "font": "Arial",
+    "axis": {
+      "labelColor": "#34495E",
+      "titleColor": "#34495E"
+    }
+  }
+}
