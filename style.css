@@ -1,0 +1,278 @@
+
+/* 1. GLOBAL SETTINGS */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f7f9fc;
+    color: #243447;
+
+    width: 100%;
+    max-width: 1100px;
+
+    margin: 0 auto;
+    padding: 30px 24px;
+
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-wrap: break-word;
+}
+
+/* 2. TYPOGRAPHY */
+
+h1, h2, h3 {
+    line-height: 1.3;
+    overflow-wrap: break-word;
+}
+
+h1 {
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 700;
+    color: #173b57;
+    text-align: center;
+    margin: 30px 0 20px;
+}
+
+h2 {
+    font-size: clamp(23px, 3vw, 30px);
+    color: #24577a;
+    margin-top: 55px;
+    margin-bottom: 20px;
+}
+
+h3 {
+    font-size: 20px;
+    color: #376b89;
+    margin-top: 30px;
+}
+
+p {
+    font-size: 16px;
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+body > p:first-of-type {
+    max-width: 750px;
+    margin: 0 auto 40px;
+    text-align: center;
+    color: #526579;
+}
+
+/* 3. PAGE SECTIONS */
+
+section {
+    width: 100%;
+    max-width: 100%;
+    margin: 40px 0;
+    padding: 30px;
+
+    background-color: #ffffff;
+    border-radius: 12px;
+    border: 1px solid #e3e9ef;
+}
+
+/* 4. VISUALISATION CONTAINERS */
+
+#disability_chart,
+#age_sex_chart,
+#service_chart,
+#gp_barriers_chart
+.chart-container {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+
+    margin: 25px auto;
+    padding: 15px 0;
+
+    text-align: center;
+    min-width: 0;
+}
+
+/* 5. VEGA-LITE EMBEDDING */
+
+.vega-embed {
+    max-width: 100%;
+    min-width: 0;
+}
+
+.vega-embed > div {
+    max-width: 100%;
+}
+
+.vega-embed canvas,
+.vega-embed svg {
+    max-width: 100%;
+    height: auto;
+}
+
+/* 6. IMAGES */
+
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+/* 7. LINKS */
+
+a {
+    color: #176c99;
+    text-decoration: underline;
+}
+
+a:hover {
+    color: #104b70;
+}
+
+/* 8. FOOTER */
+
+footer {
+    margin-top: 70px;
+    padding: 25px 0;
+
+    border-top: 1px solid #d7e0e8;
+
+    text-align: center;
+    font-size: 14px;
+    color: #657586;
+}
+
+/* 9. TABLET RESPONSIVE */
+
+@media (max-width: 900px) {
+
+    body {
+        padding: 24px 18px;
+    }
+
+    section {
+        padding: 22px;
+    }
+
+    h2 {
+        margin-top: 40px;
+    }
+}
+
+/* 10. SMALL SCREEN RESPONSIVE */
+
+@media (max-width: 600px) {
+
+    body {
+        padding: 16px 12px;
+        font-size: 15px;
+    }
+
+    h1 {
+        margin-top: 20px;
+    }
+
+    h2 {
+        margin-top: 32px;
+    }
+
+    p {
+        font-size: 15px;
+    }
+
+    section {
+        padding: 16px;
+        margin: 25px 0;
+    }
+
+    .chart-container,
+    #disability_chart
+    #age_sex_chart,
+    #service_chart,
+    #gp_barriers_chart {
+        padding: 10px 0;
+    }
+    /* Chart 4 - GP Barriers */
+#gp_barriers_chart {
+    width: 100%;
+    max-width: 1100px;
+    margin: 30px auto;
+    overflow-x: auto;
+}
+
+#gp_barriers_chart .vega-embed {
+    width: max-content;
+    max-width: none;
+}
+/* Chart 5 - Small Multiples Dot Plot */
+#gp_age_chart {
+    width: 100%;
+    max-width: 1100px;
+    margin: 35px auto;
+    overflow-x: auto;
+}
+
+#gp_age_chart .vega-embed {
+    width: max-content;
+    max-width: none;
+}
+
+
+}
+/* KPI SECTION */
+.kpi-section {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 16px !important;
+    width: 100%;
+    max-width: 1100px;
+    margin: 30px auto 50px;
+    padding: 0;
+    background: transparent;
+}
+
+/* INDIVIDUAL KPI CARDS */
+.kpi-section > .kpi-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 8px;
+    min-width: 0;
+    padding: 22px;
+    margin: 0;
+    background: white;
+    border: 1px solid #e8e2ef;
+    border-radius: 4px;
+}
+
+.kpi-card .kpi-label {
+    margin: 0;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #62567d;
+}
+
+.kpi-card h2 {
+    margin: 0;
+    font-family: Georgia, serif;
+    font-size: 35px;
+    color: #493479;
+}
+
+.kpi-card .kpi-note {
+    margin: 0;
+    font-size: 12px;
+    color: #777;
+}
+
+@media (max-width: 650px) {
+    .kpi-section {
+        grid-template-columns: 1fr !important;
+    }
+}

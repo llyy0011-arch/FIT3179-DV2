@@ -1,0 +1,84 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Disability and Health Services in Australia</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Vega-Lite libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+</head>
+
+<body>
+
+    
+<header class="hero">
+    <div class="hero-content">
+        <h1>Disability and Health Services in Australia</h1>
+        <p>
+            Exploring disability prevalence, healthcare access,
+            and barriers to essential health services across Australia.
+        </p>
+    </div>
+</header>
+
+<section class="kpi-section">
+    <div class="kpi-card">
+        <p class="kpi-label">AUSTRALIANS WITH DISABILITY</p>
+        <h2>5.5M</h2>
+        <p class="kpi-note">People, 2022</p>
+    </div>
+
+    <div class="kpi-card">
+        <p class="kpi-label">DISABILITY PREVALENCE</p>
+        <h2>21.4%</h2>
+        <p class="kpi-note">Of Australians, 2022</p>
+    </div>
+
+    <div class="kpi-card">
+        <p class="kpi-label">REFERENCE YEAR</p>
+        <h2>2022</h2>
+        <p class="kpi-note">ABS SDAC and AIHW data</p>
+    </div>
+</section>
+
+
+    <h2>Disability in Australia</h2>
+
+    <!-- Chart 1: Grouped Bar Chart -->
+    <div id="age_sex_chart"></div>
+
+    <!-- Chart 2: Dumbbell Chart -->
+    <div id="disability_chart"></div>
+
+    <div id="service_chart"></div>
+    <div id="gp_barriers_chart"></div>
+    <div id="gp_age_chart"></div>
+
+<script>
+    // Chart 1: Grouped Bar Chart
+    vegaEmbed("#age_sex_chart", "js/age_sex.vg.json")
+        .catch(console.error);
+
+    // Chart 2: Dumbbell Chart
+    vegaEmbed("#disability_chart", "js/disability.vg.json")
+        .catch(console.error);
+    vegaEmbed("#service_chart", "js/service.vg.json")
+        .catch(console.error);
+    vegaEmbed("#gp_barriers_chart", "js/gp_barriers.vg.json")
+    .then(() => console.log("Chart 4 loaded successfully"))
+    .catch(error => console.error("Chart 4 ERROR:", error));
+    // Chart 5: Small Multiples Dot Plot
+    vegaEmbed("#gp_age_chart", "js/gp_age.vg.json")
+    .catch(console.error);
+</script>
+
+</body>
+</html>
+
