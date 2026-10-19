@@ -1,6 +1,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +10,6 @@
 
     <link rel="stylesheet" href="style.css">
 
-    <!-- Vega-Lite libraries -->
     <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
     <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
     <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
@@ -17,135 +17,797 @@
 
 <body>
 
-    
-<header class="hero">
-    <div class="hero-content">
-        <h1>Disability and Health Services in Australia</h1>
-        <p>
-            Exploring disability prevalence, healthcare access,
-            and barriers to essential health services across Australia.
+    <!-- HERO -->
+
+    <header class="hero">
+
+        <div class="hero-eyebrow">
+            <span class="hero-dot"></span>
+            THE AUSTRALIAN DISABILITY LANDSCAPE
+        </div>
+
+        <h1>
+            Disability and<br>
+            Health Services<br>
+            <span>in Australia.</span>
+        </h1>
+
+        <p class="hero-subtitle">
+            More than five million Australians live with
+            disability. Yet the experience of disability,
+            the distribution of support and access to
+            essential healthcare are far from equal.
         </p>
-    </div>
-</header>
 
-<section class="kpi-section">
-    <div class="kpi-card">
-        <p class="kpi-label">AUSTRALIANS WITH DISABILITY</p>
-        <h2>5.5M</h2>
-        <p class="kpi-note">People, 2022</p>
-    </div>
+        <div class="hero-stats">
 
-    <div class="kpi-card">
-        <p class="kpi-label">DISABILITY PREVALENCE</p>
-        <h2>21.4%</h2>
-        <p class="kpi-note">Of Australians, 2022</p>
-    </div>
+            <div class="stat-primary">
+                <p class="stat-label">
+                    AUSTRALIANS WITH DISABILITY
+                </p>
 
-    <div class="kpi-card">
-        <p class="kpi-label">REFERENCE YEAR</p>
-        <h2>2022</h2>
-        <p class="kpi-note">ABS SDAC and AIHW data</p>
-    </div>
-</section>
+                <div class="stat-number">5.5M</div>
 
+                <p class="stat-description">
+                    People living with disability in 2022
+                </p>
+            </div>
 
-    <h2>Disability in Australia</h2>
+            <div class="stat-secondary">
+                <p class="stat-label">
+                    NATIONAL DISABILITY PREVALENCE
+                </p>
 
-    <!-- Chart 1: Grouped Bar Chart -->
-    <div id="age_sex_chart"></div>
+                <div class="stat-number">21.4%</div>
 
-    <!-- Chart 2: Dumbbell Chart -->
-    <div id="disability_chart"></div>
+                <p class="stat-description">
+                    Approximately one in five Australians
+                </p>
+            </div>
 
-    <div id="service_chart"></div>
-    <div id="gp_barriers_chart"></div>
-    <div id="gp_age_chart"></div>
+        </div>
 
-    
-<section class="chart-section">
-  <h2>Who Faces Barriers to GP Access?</h2>
+        <div class="hero-bottom">
+            <span>EXPLORE THE STORY BEHIND THE NUMBERS</span>
+            <a href="#disability" aria-label="Explore the visualisation">
+                ↓
+            </a>
+        </div>
 
-  <p>
-    Access to healthcare is not equal across age groups
-    and sexes. Explore how cost and other barriers affect
-    whether people with disability can see a GP when needed.
-  </p>
+    </header>
 
-  <div id="gp_waffle"></div>
+    <!-- INTRODUCTION -->
 
-  <p class="map-note">
-    Each square represents approximately 1% of the selected
-    group. Percentages are rounded for display.
-    Source: AIHW, Table ACCE4b, 2022.
-  </p>
-</section>
+    <section class="intro-section">
 
+        <p class="eyebrow">THE BIGGER PICTURE</p>
 
-<section class="chart-section">
-  <h2>NDIS Participation Across Australia</h2>
+        <h2>Beyond the National Average</h2>
 
-  <p>
-    Explore how NDIS participant numbers vary across
-    Australian states and territories in December 2022.
-    Larger circles represent higher participant counts.
-  </p>
+        <p>
+            In 2022, approximately
+            <strong class="highlight">5.5 million Australians</strong>
+            were living with disability, representing
+            <strong class="highlight">21.4% of the population</strong>.
+            However, these national figures do not reveal
+            how disability differs between demographic groups
+            or how access to support varies across Australia.
+        </p>
 
-  <div id="ndis_map"></div>
+        <p>
+            This story begins with disability prevalence,
+            moves to the geographical distribution of
+            NDIS participants, and then examines barriers
+            to healthcare access among people with disability.
+        </p>
 
-  <p class="map-note">
-  </p>
-</section>
+    </section>
 
-<!-- Proportional Symbol Map -->
-<section class="chart-section">
-  <h2>Comparing NDIS Participation Across States</h2>
+    <!-- SECTION 01: DISABILITY -->
 
-  <p>
-    Compare NDIS participant numbers across Australia.
-    Larger circles represent higher participant counts
-    in each state and territory.
-  </p>
+    <section class="story-section" id="disability">
 
-  <div id="ndis_symbol_map"></div>
-</section>
+        <div class="section-heading">
 
+            <span class="section-number">01</span>
 
-<script>
-    // Chart 1: Grouped Bar Chart
-    vegaEmbed("#age_sex_chart", "js/age_sex.vg.json")
-        .catch(console.error);
+            <div>
+                <p class="section-label">THE NATIONAL PICTURE</p>
+                <h2>Who Experiences Disability?</h2>
+            </div>
 
-    // Chart 2: Dumbbell Chart
-    vegaEmbed("#disability_chart", "js/disability.vg.json")
-        .catch(console.error);
-    vegaEmbed("#service_chart", "js/service.vg.json")
-        .catch(console.error);
-    vegaEmbed("#gp_barriers_chart", "js/gp_barriers.vg.json")
-    .then(() => console.log("Chart 4 loaded successfully"))
-    .catch(error => console.error("Chart 4 ERROR:", error));
-    // Chart 5: Small Multiples Dot Plot
-    vegaEmbed("#gp_age_chart", "js/gp_age.vg.json")
-    .catch(console.error);
-    
-     // State-level Choropleth Map
-vegaEmbed("#ndis_map", "js/ndis_map.vg.json", {
-  actions: false
-}).catch(console.error);
+        </div>
 
-// Proportional Symbol Map
-vegaEmbed("#ndis_symbol_map", "js/ndis_overview.vg.json", {
-  actions: false
-}).catch(console.error);
+        <p class="section-intro">
+            Disability prevalence is not uniform across
+            the Australian population. Age and sex provide
+            two important perspectives for understanding
+            differences that may be hidden within the
+            national average.
+        </p>
 
+        <!-- CHART 1 -->
 
-vegaEmbed("#gp_waffle", "js/gp_waffle.vg.json", {
-  actions: false
-}).catch(console.error);
+        <article class="chart-block">
 
+            <div class="chart-heading">
+                <p class="chart-kicker">DISABILITY PREVALENCE</p>
+                <h3>How Does Disability Differ Across Age Groups?</h3>
+            </div>
 
+            <p class="chart-description">
+                Australia's overall disability prevalence was
+                <strong class="highlight">21.4% in 2022</strong>.
+                However, prevalence increases substantially
+                with age, with older Australians experiencing
+                much higher rates than younger age groups.
+                The chart also reveals differences between
+                males and females, suggesting that disability
+                prevalence is influenced by both age and sex.
+            </p>
 
-</script>
+            <div class="visual-panel">
+
+                <div id="age_sex_chart" class="chart-container"></div>
+
+                <p class="chart-source">
+                    Figure 1. Disability prevalence by age
+                    group and sex. Source: ABS, Survey of
+                    Disability, Ageing and Carers.
+                </p>
+
+            </div>
+
+        </article>
+
+        <!-- CHART 2 -->
+
+        <article class="chart-block">
+
+            <div class="chart-heading">
+                <p class="chart-kicker">CHANGES BETWEEN 2003 AND 2022</p>
+                <h3>How Has Disability Prevalence Changed Over Time?</h3>
+            </div>
+
+            <p class="chart-description">
+                Disability prevalence has changed differently
+                across age groups between
+                <strong class="highlight">2003 and 2022</strong>.
+                The dumbbell chart shows that the direction
+                and magnitude of change vary across generations.
+                While some younger age groups experienced
+                increases in disability prevalence,
+                some older age groups recorded declines.
+                This suggests that changes in disability
+                prevalence have not been uniform
+                across the Australian population.
+            </p>
+
+            <div class="visual-panel">
+
+                <div id="disability_chart" class="chart-container"></div>
+
+                <p class="chart-source">
+                    Figure 2. Disability prevalence by age group,
+                    2003 and 2022. Source: ABS.
+                </p>
+
+            </div>
+
+        </article>
+
+        <div class="transition-block">
+            <p>
+                Understanding who experiences disability
+                is only the beginning. The next question
+                is how disability support is distributed
+                across Australia.
+            </p>
+        </div>
+
+    </section>
+
+    <!-- SECTION 02: NDIS -->
+
+    <section class="story-section" id="ndis">
+
+        <div class="section-heading">
+
+            <span class="section-number">02</span>
+
+            <div>
+                <p class="section-label">GEOGRAPHICAL DIFFERENCES</p>
+                <h2>Where Is Disability Support Concentrated?</h2>
+            </div>
+
+        </div>
+
+        <p class="section-intro">
+            The National Disability Insurance Scheme
+            provides support to eligible Australians
+            with disability. Comparing participant
+            distributions across states and territories
+            reveals geographical differences in the
+            scale of NDIS participation.
+        </p>
+
+        <!-- MAP 1: CHOROPLETH -->
+
+        <article class="chart-block split-layout">
+
+            <div class="visual-panel map-panel">
+
+                <div id="ndis_map" class="compact-map"></div>
+
+                <p class="chart-source">
+                    Figure 3. State share of published
+                    Australian NDIS participants,
+                    December 2022. Source: NDIA.
+                </p>
+
+            </div>
+
+            <div class="insight-panel">
+
+                <p class="chart-kicker">SHARE OF NATIONAL PARTICIPANTS</p>
+
+                <h3>Which State Accounts for the Largest Share?</h3>
+
+                <p>
+                    NDIS participation is distributed
+                    unevenly across Australia. The
+                    choropleth map compares each state's
+                    contribution to the national total
+                    of published participants.
+                </p>
+
+                <div class="insight-highlight">
+
+                    <span class="insight-label">
+                        LARGEST SHARE
+                    </span>
+
+                    <strong class="insight-number"
+                            id="ndis-top-share">
+                        Loading...
+                    </strong>
+
+                    <span class="insight-detail"
+                          id="ndis-top-share-state">
+                        Calculating from the map data
+                    </span>
+
+                </div>
+
+                <p id="ndis-share-story">
+                    The darker shades identify states
+                    accounting for larger shares of
+                    published NDIS participants.
+                </p>
+
+                <p class="interpretation">
+                    These percentages represent shares
+                    of Australia's published NDIS
+                    participant total, not the percentage
+                    of residents receiving NDIS support
+                    within each state.
+                </p>
+
+            </div>
+
+        </article>
+
+        <!-- MAP 2: PROPORTIONAL SYMBOL -->
+
+        <article class="chart-block split-layout reverse-layout">
+
+            <div class="visual-panel map-panel">
+
+                <div id="ndis_symbol_map" class="compact-map"></div>
+
+                <p class="chart-source">
+                    Figure 4. Published NDIS participant
+                    counts by state and territory,
+                    December 2022. Source: NDIA.
+                </p>
+
+            </div>
+
+            <div class="insight-panel">
+
+                <p class="chart-kicker">NUMBER OF PARTICIPANTS</p>
+
+                <h3>How Large Is the Difference Between States?</h3>
+
+                <p>
+                    While the choropleth map presents
+                    percentage shares, the proportional
+                    symbol map focuses on the number
+                    of participants. Circle area increases
+                    with participant counts.
+                </p>
+
+                <div class="dual-stat">
+
+                    <div class="mini-stat">
+                        <span class="insight-label">
+                            HIGHEST COUNT
+                        </span>
+
+                        <strong id="ndis-high-count">
+                            Loading...
+                        </strong>
+
+                        <span id="ndis-high-state">
+                            Calculating...
+                        </span>
+                    </div>
+
+                    <div class="mini-stat">
+                        <span class="insight-label">
+                            LOWEST COUNT
+                        </span>
+
+                        <strong id="ndis-low-count">
+                            Loading...
+                        </strong>
+
+                        <span id="ndis-low-state">
+                            Calculating...
+                        </span>
+                    </div>
+
+                </div>
+
+                <p id="ndis-count-story">
+                    The larger circles highlight
+                    states with higher participant counts.
+                </p>
+
+                <p class="interpretation">
+                    Participant counts describe the scale
+                    of NDIS participation. They do not
+                    directly measure unmet demand or
+                    differences in service quality.
+                </p>
+
+            </div>
+
+        </article>
+
+        <div class="transition-block">
+            <p>
+                NDIS participation shows where support
+                is distributed, but participation alone
+                cannot tell us whether people with
+                disability can access essential
+                healthcare when they need it.
+            </p>
+        </div>
+
+    </section>
+
+    <!-- SECTION 03: HEALTHCARE -->
+
+    <section class="story-section" id="healthcare">
+
+        <div class="section-heading">
+
+            <span class="section-number">03</span>
+
+            <div>
+                <p class="section-label">ACCESS AND BARRIERS</p>
+                <h2>When Healthcare Is Needed, Can People Access It?</h2>
+            </div>
+
+        </div>
+
+        <p class="section-intro">
+            Access to healthcare is a crucial part
+            of living with disability. Yet the need
+            for medical services does not always
+            translate into successful access.
+            Financial and non-financial barriers
+            can prevent people from receiving care.
+        </p>
+
+        <!-- CHART 5 -->
+
+        <article class="chart-block">
+
+            <div class="chart-heading">
+                <p class="chart-kicker">HEALTHCARE SERVICE ACCESS</p>
+                <h3>How Accessible Are Essential Health Services?</h3>
+            </div>
+
+            <p class="chart-description">
+                Healthcare service use varies across
+                different age groups and types of care.
+                Seeing a GP for personal health is among
+                the most commonly reported services,
+                with rates exceeding
+                <strong class="highlight">80%</strong>
+                in several age groups.
+                In comparison, hospital admissions
+                are considerably less frequent.
+                This highlights the central role of
+                general practitioners in healthcare
+                for Australians with disability.
+            </p>
+
+            <div class="visual-panel">
+
+                <div id="service_chart" class="chart-container"></div>
+
+                <p class="chart-source">
+                    Figure 5. Healthcare service use
+                    by age group, Australia, 2022.
+                    Source: AIHW.
+                </p>
+
+            </div>
+
+        </article>
+
+        <!-- CHART 6 -->
+
+        <article class="chart-block">
+
+            <div class="chart-heading">
+                <p class="chart-kicker">UNMET HEALTHCARE NEEDS</p>
+                <h3>What Prevents People from Seeing a GP?</h3>
+            </div>
+
+            <p class="chart-description">
+                Waiting times are a major obstacle
+                to accessing GP care among people
+                with disability. Across the population
+                examined, approximately
+                <strong class="highlight">43.1%</strong>
+                reported waiting times as a reason
+                for unmet GP needs, compared with
+                <strong class="highlight">8.8%</strong>
+                who reported cost.
+                Among people with severe or profound
+                disability, waiting times accounted
+                for <strong class="highlight">41.0%</strong>,
+                while cost accounted for
+                <strong class="highlight">9.0%</strong>.
+                These figures suggest that delays
+                in accessing appointments are a
+                more prominent barrier than direct
+                financial costs.
+            </p>
+
+            <div class="interaction-note">
+                <strong>Explore the data:</strong>
+                Use the dropdown to compare barriers
+                across disability groups.
+            </div>
+
+            <div class="visual-panel">
+
+                <div id="gp_barriers_chart" class="chart-container"></div>
+
+                <p class="chart-source">
+                    Figure 6. Main reasons for unmet GP needs
+                    among people with disability,
+                    Australia, 2022. Source: AIHW.
+                </p>
+
+            </div>
+
+        </article>
+
+        <!-- CHART 7 -->
+
+        <article class="chart-block">
+
+            <div class="chart-heading">
+                <p class="chart-kicker">AGE DIFFERENCES</p>
+                <h3>Does Age Change the Experience of GP Access?</h3>
+            </div>
+
+            <p class="chart-description">
+                Waiting times remain a prominent barrier
+                across age groups, but their relative
+                importance differs by age. They account
+                for approximately
+                <strong class="highlight">47.7%</strong>
+                among people aged 25 to 44 and
+                <strong class="highlight">47.2%</strong>
+                among those aged 45 to 64, compared
+                with <strong class="highlight">37.0%</strong>
+                among people aged 65 and over.
+                Cost-related barriers also differ,
+                reaching <strong class="highlight">13.9%</strong>
+                among those aged 25 to 44, compared
+                with <strong class="highlight">4.2%</strong>
+                among those aged 65 and over.
+                This suggests that younger and
+                middle-aged adults face different
+                challenges from older Australians.
+            </p>
+
+            <div class="visual-panel">
+
+                <div id="gp_age_chart" class="chart-container"></div>
+
+                <p class="chart-source">
+                    Figure 7. Main reasons for unmet GP needs
+                    by age group, Australia, 2022.
+                    Source: AIHW.
+                </p>
+
+            </div>
+
+        </article>
+
+        <!-- CHART 8: WAFFLE -->
+
+        <article class="chart-block">
+
+            <div class="chart-heading">
+                <p class="chart-kicker">COST AND GENDER INEQUALITY</p>
+                <h3>Who Is Most Affected by the Cost of GP Care?</h3>
+            </div>
+
+            <p class="chart-description">
+                Among people with disability aged
+                <strong class="highlight">25 to 44</strong>,
+                <strong class="highlight">22.6% of females</strong>
+                did not see a GP when needed because of cost,
+                compared with
+                <strong class="highlight">14.2% of males</strong>.
+                This represents a gap of
+                <strong class="highlight">8.4 percentage points</strong>.
+            </p>
+
+            <div class="waffle-insights">
+
+                <div class="waffle-stat">
+                    <span>FEMALES AGED 25 TO 44</span>
+                    <strong>22.6%</strong>
+                    <small>Did not see a GP due to cost</small>
+                </div>
+
+                <div class="waffle-stat">
+                    <span>MALES AGED 25 TO 44</span>
+                    <strong>14.2%</strong>
+                    <small>Did not see a GP due to cost</small>
+                </div>
+
+                <div class="waffle-stat accent">
+                    <span>GENDER GAP</span>
+                    <strong>8.4 pp</strong>
+                    <small>Females compared with males</small>
+                </div>
+
+            </div>
+
+            <p class="chart-description">
+                The pattern also appears among those aged
+                <strong class="highlight">45 to 64</strong>,
+                where <strong class="highlight">13.2%</strong>
+                of females reported cost-related unmet GP
+                needs, compared with
+                <strong class="highlight">8.3%</strong>
+                of males. However, cost was not the only
+                barrier. Among females aged 25 to 44,
+                <strong class="highlight">34.7%</strong>
+                reported not seeing a GP because of
+                other reasons.
+            </p>
+
+            <div class="interaction-note">
+                <strong>Explore the data:</strong>
+                Select an age group using the dropdown
+                to compare GP access outcomes for males
+                and females. Each square represents
+                approximately one percentage point.
+            </div>
+
+            <div class="visual-panel">
+
+                <div id="gp_waffle" class="chart-container"></div>
+
+                <p class="chart-source">
+                    Figure 8. GP access outcomes by
+                    sex and age group, 2022.
+                    Source: AIHW, Table ACCE4b.
+                    Percentages are rounded for display.
+                </p>
+
+            </div>
+
+        </article>
+
+    </section>
+
+    <!-- VEGA VISUALISATIONS -->
+
+    <script>
+
+        const embedOptions = {
+            actions: false,
+            renderer: "svg"
+        };
+
+        function embedChart(selector, file) {
+            return vegaEmbed(
+                selector,
+                file,
+                embedOptions
+            ).catch(error => {
+                console.error(
+                    "Failed to load " + file,
+                    error
+                );
+                return null;
+            });
+        }
+
+        embedChart(
+            "#age_sex_chart",
+            "js/age_sex.vg.json"
+        );
+
+        embedChart(
+            "#disability_chart",
+            "js/disability.vg.json"
+        );
+
+        embedChart(
+            "#service_chart",
+            "js/service.vg.json"
+        );
+
+        embedChart(
+            "#gp_barriers_chart",
+            "js/gp_barriers.vg.json"
+        );
+
+        embedChart(
+            "#gp_age_chart",
+            "js/gp_age.vg.json"
+        );
+
+        embedChart(
+            "#gp_waffle",
+            "js/gp_waffle.vg.json"
+        );
+
+        embedChart(
+            "#ndis_symbol_map",
+            "js/ndis_overview.vg.json"
+        );
+
+        // NDIS CHOROPLETH AND DATA-DRIVEN STORYTELLING
+
+        embedChart(
+            "#ndis_map",
+            "js/ndis_map.vg.json"
+        ).then(result => {
+
+            if (!result) return;
+
+            const rows = result.view.data("state_totals");
+
+            const validRows = rows.filter(row =>
+                row.state &&
+                Number.isFinite(Number(row.participants_total)) &&
+                Number.isFinite(Number(row.percentage))
+            );
+
+            if (validRows.length === 0) {
+                console.warn("No NDIS state data found.");
+                return;
+            }
+
+            const sorted = [...validRows].sort(
+                (a, b) =>
+                    Number(b.participants_total) -
+                    Number(a.participants_total)
+            );
+
+            const highest = sorted[0];
+            const lowest = sorted[sorted.length - 1];
+
+            const fmt = value =>
+                Math.round(Number(value)).toLocaleString("en-AU");
+
+            const pct = value =>
+                Number(value).toFixed(1) + "%";
+
+            const setText = (id, value) => {
+                const element = document.getElementById(id);
+                if (element) element.textContent = value;
+            };
+
+            setText(
+                "ndis-top-share",
+                pct(highest.percentage)
+            );
+
+            setText(
+                "ndis-top-share-state",
+                highest.state + " of Australia's published participants"
+            );
+
+            setText(
+                "ndis-high-count",
+                fmt(highest.participants_total)
+            );
+
+            setText(
+                "ndis-high-state",
+                highest.state
+            );
+
+            setText(
+                "ndis-low-count",
+                fmt(lowest.participants_total)
+            );
+
+            setText(
+                "ndis-low-state",
+                lowest.state
+            );
+
+            const shareStory = document.getElementById(
+                "ndis-share-story"
+            );
+
+            if (shareStory) {
+                shareStory.innerHTML =
+                    "<strong class='highlight'>" +
+                    highest.state +
+                    "</strong> accounts for " +
+                    "<strong class='highlight'>" +
+                    pct(highest.percentage) +
+                    "</strong> of the published national total, " +
+                    "compared with " +
+                    "<strong class='highlight'>" +
+                    pct(lowest.percentage) +
+                    "</strong> in " +
+                    lowest.state +
+                    ". This is a difference of " +
+                    "<strong class='highlight'>" +
+                    (
+                        Number(highest.percentage) -
+                        Number(lowest.percentage)
+                    ).toFixed(1) +
+                    " percentage points</strong>.";
+            }
+
+            const countStory = document.getElementById(
+                "ndis-count-story"
+            );
+
+            if (countStory) {
+                countStory.innerHTML =
+                    "<strong class='highlight'>" +
+                    highest.state +
+                    "</strong> records " +
+                    "<strong class='highlight'>" +
+                    fmt(highest.participants_total) +
+                    " published participants</strong>, while " +
+                    lowest.state +
+                    " records " +
+                    "<strong class='highlight'>" +
+                    fmt(lowest.participants_total) +
+                    "</strong>. The difference is " +
+                    "<strong class='highlight'>" +
+                    fmt(
+                        Number(highest.participants_total) -
+                        Number(lowest.participants_total)
+                    ) +
+                    " participants</strong>.";
+            }
+
+        });
+
+    </script>
 
 </body>
 </html>
-

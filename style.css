@@ -1,5 +1,5 @@
 
-/* 1. GLOBAL SETTINGS */
+/* GLOBAL */
 
 * {
     box-sizing: border-box;
@@ -11,93 +11,575 @@ html {
 
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background-color: #f7f9fc;
+    background: #f4f7fa;
     color: #243447;
-
-    width: 100%;
     max-width: 1100px;
-
+    width: 100%;
     margin: 0 auto;
-    padding: 30px 24px;
-
+    padding: 24px;
     font-size: 16px;
-    line-height: 1.7;
+    line-height: 1.75;
     overflow-wrap: break-word;
 }
-
-/* 2. TYPOGRAPHY */
 
 h1, h2, h3 {
     line-height: 1.3;
-    overflow-wrap: break-word;
-}
-
-h1 {
-    font-size: clamp(28px, 4vw, 42px);
-    font-weight: 700;
-    color: #173b57;
-    text-align: center;
-    margin: 30px 0 20px;
-}
-
-h2 {
-    font-size: clamp(23px, 3vw, 30px);
-    color: #24577a;
-    margin-top: 55px;
-    margin-bottom: 20px;
-}
-
-h3 {
-    font-size: 20px;
-    color: #376b89;
-    margin-top: 30px;
 }
 
 p {
-    font-size: 16px;
+    margin: 0 0 18px;
     line-height: 1.8;
-    margin-bottom: 20px;
 }
 
-body > p:first-of-type {
-    max-width: 750px;
-    margin: 0 auto 40px;
-    text-align: center;
-    color: #526579;
+/* HERO */
+
+.hero {
+    background: #102c46;
+    color: white;
+    padding: 65px 55px 35px;
+    border-radius: 14px;
+    margin-bottom: 35px;
 }
 
-/* 3. PAGE SECTIONS */
-
-section {
-    width: 100%;
-    max-width: 100%;
-    margin: 40px 0;
-    padding: 30px;
-
-    background-color: #ffffff;
-    border-radius: 12px;
-    border: 1px solid #e3e9ef;
+.hero-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #a5e4da;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 25px;
 }
 
-/* 4. VISUALISATION CONTAINERS */
+.hero-dot {
+    width: 9px;
+    height: 9px;
+    background: #47d5bf;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
 
-#disability_chart,
-#age_sex_chart,
-#service_chart,
-#gp_barriers_chart
-.chart-container {
-    display: block;
-    width: 100%;
-    max-width: 100%;
+.hero h1 {
+    color: #ffffff;
+    font-size: clamp(34px, 5vw, 58px);
+    line-height: 1.15;
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    margin: 0 0 25px;
+    text-align: left;
+}
 
-    margin: 25px auto;
-    padding: 15px 0;
+.hero h1 span {
+    color: #67dec9;
+}
 
-    text-align: center;
+.hero-subtitle {
+    color: #d0dfeb;
+    font-size: 17px;
+    max-width: 650px;
+    margin-bottom: 40px;
+}
+
+/* HERO STATISTICS */
+
+.hero-stats {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 16px;
+    margin-bottom: 35px;
+}
+
+.stat-primary,
+.stat-secondary {
+    padding: 28px 30px;
+    border-radius: 10px;
     min-width: 0;
 }
 
-/* 5. VEGA-LITE EMBEDDING */
+.stat-primary {
+    background: #204762;
+    border: 1px solid #315c77;
+}
+
+.stat-secondary {
+    background: #d7f1e9;
+    color: #174e53;
+}
+
+.stat-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.3px;
+    margin-bottom: 10px;
+}
+
+.stat-primary .stat-label {
+    color: #a5e4da;
+}
+
+.stat-secondary .stat-label {
+    color: #205c61;
+}
+
+.stat-number {
+    font-size: clamp(45px, 6vw, 70px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -2px;
+}
+
+.stat-primary .stat-number {
+    color: #ffffff;
+}
+
+.stat-secondary .stat-number {
+    color: #174e53;
+}
+
+.stat-description {
+    font-size: 14px;
+    margin: 12px 0 0;
+}
+
+.stat-primary .stat-description {
+    color: #d0dfeb;
+}
+
+.stat-secondary .stat-description {
+    color: #205c61;
+}
+
+/* HERO BOTTOM */
+
+.hero-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.15);
+}
+
+.hero-bottom span {
+    color: #b7c9d9;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.hero-bottom a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid #67dec9;
+    border-radius: 50%;
+    color: #67dec9;
+    text-decoration: none;
+    font-size: 23px;
+}
+
+.hero-bottom a:hover {
+    background: #67dec9;
+    color: #102c46;
+}
+
+/* INTRODUCTION */
+
+.intro-section {
+    background: white;
+    border: 1px solid #e3e9ef;
+    border-radius: 12px;
+    padding: 40px 50px;
+    margin-bottom: 45px;
+}
+
+.eyebrow {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    font-weight: 700;
+    color: #288d91;
+    margin-bottom: 10px;
+}
+
+.intro-section h2 {
+    color: #173b57;
+    font-size: 28px;
+    margin: 0 0 20px;
+}
+
+.intro-section p:not(.eyebrow) {
+    color: #43566a;
+}
+
+/* STORY SECTIONS */
+
+.story-section {
+    background: #ffffff;
+    border: 1px solid #e3e9ef;
+    border-radius: 12px;
+    padding: 45px 38px;
+    margin-bottom: 50px;
+}
+
+.section-heading {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 22px;
+}
+
+.section-number {
+    font-family: Georgia, serif;
+    font-size: 46px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.4px;
+    margin-bottom: 6px;
+}
+
+.section-heading h2 {
+    font-size: clamp(24px, 3vw, 30px);
+    margin: 0;
+    color: #173b57;
+}
+
+.section-intro {
+    max-width: 850px;
+    font-size: 17px;
+    color: #526579;
+    margin-bottom: 42px;
+}
+
+/* SECTION ACCENTS */
+
+#disability {
+    border-top: 5px solid #24577a;
+}
+
+#disability .section-number,
+#disability .section-label {
+    color: #24577a;
+}
+
+#ndis {
+    border-top: 5px solid #288d91;
+}
+
+#ndis .section-number,
+#ndis .section-label {
+    color: #288d91;
+}
+
+#healthcare {
+    border-top: 5px solid #8063a6;
+}
+
+#healthcare .section-number,
+#healthcare .section-label {
+    color: #8063a6;
+}
+
+/* CHART BLOCKS */
+
+.chart-block {
+    width: 100%;
+    min-width: 0;
+    margin-bottom: 55px;
+    padding-bottom: 45px;
+    border-bottom: 1px solid #e6ecf1;
+}
+
+.chart-block:last-of-type {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.chart-heading {
+    margin-bottom: 18px;
+}
+
+.chart-kicker {
+    color: #288d91;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.4px;
+    margin-bottom: 8px;
+}
+
+.chart-heading h3,
+.insight-panel h3 {
+    font-size: clamp(19px, 2.3vw, 23px);
+    color: #24577a;
+    margin: 0 0 18px;
+}
+
+.chart-description {
+    max-width: 850px;
+    color: #43566a;
+    margin-bottom: 20px;
+}
+
+/* VISUAL PANELS */
+
+.visual-panel {
+    width: 100%;
+    min-width: 0;
+    padding: 20px;
+    background: #ffffff;
+    border: 1px solid #e3e9ef;
+    border-radius: 10px;
+}
+
+.chart-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    min-width: 0;
+    margin: 15px auto;
+    padding: 10px 0;
+}
+
+.chart-source {
+    color: #748394;
+    font-size: 12px;
+    line-height: 1.65;
+    margin: 14px 0 0;
+}
+
+/* NDIS TWO-COLUMN LAYOUT */
+
+#ndis .split-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+    gap: 26px;
+    align-items: center;
+}
+
+#ndis .map-panel {
+    padding: 12px;
+    min-width: 0;
+}
+
+#ndis .insight-panel {
+    min-width: 0;
+    padding: 5px 0;
+}
+
+#ndis .insight-panel p {
+    color: #43566a;
+    font-size: 15px;
+    line-height: 1.8;
+}
+
+#ndis .reverse-layout .map-panel {
+    order: 2;
+}
+
+#ndis .reverse-layout .insight-panel {
+    order: 1;
+}
+
+/* COMPACT MAPS */
+
+.compact-map {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    overflow: visible;
+}
+
+#ndis_map,
+#ndis_symbol_map {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+}
+
+.compact-map .vega-embed {
+    max-width: 100%;
+    min-width: 0;
+}
+
+.compact-map svg,
+.compact-map canvas {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+/* HIGHLIGHT IMPORTANT NUMBERS */
+
+.highlight {
+    color: #087d83;
+    font-weight: 800;
+}
+
+.insight-highlight {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 18px;
+    margin: 20px 0;
+    background: #e7f6f3;
+    border-left: 4px solid #288d91;
+    border-radius: 7px;
+}
+
+.insight-label {
+    display: block;
+    color: #417479;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.insight-number {
+    color: #126a70;
+    font-size: 35px;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.insight-detail {
+    color: #285c60;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+/* TWO NDIS STATISTICS */
+
+.dual-stat {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin: 22px 0;
+}
+
+.mini-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    min-width: 0;
+    padding: 16px 12px;
+    border-radius: 8px;
+    background: #edf7f6;
+}
+
+.mini-stat:nth-child(2) {
+    background: #edf2f8;
+}
+
+.mini-stat strong {
+    font-size: clamp(20px, 2.5vw, 27px);
+    font-weight: 800;
+    line-height: 1.2;
+    color: #126a70;
+    overflow-wrap: anywhere;
+}
+
+.mini-stat span:last-child {
+    font-size: 12px;
+    color: #526579;
+}
+
+.interpretation {
+    padding-left: 14px;
+    border-left: 3px solid #d3e2e7;
+    font-size: 13px !important;
+    color: #687b8c !important;
+}
+
+/* GP WAFFLE HIGHLIGHTS */
+
+.waffle-insights {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    margin: 24px 0;
+}
+
+.waffle-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    min-width: 0;
+    padding: 18px;
+    background: #f2f5fa;
+    border-radius: 8px;
+}
+
+.waffle-stat span {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    color: #526579;
+}
+
+.waffle-stat strong {
+    font-size: clamp(25px, 3vw, 35px);
+    line-height: 1.2;
+    color: #24577a;
+}
+
+.waffle-stat small {
+    font-size: 12px;
+    line-height: 1.5;
+    color: #657586;
+}
+
+.waffle-stat.accent {
+    background: #e4f5ef;
+}
+
+.waffle-stat.accent strong {
+    color: #087d83;
+}
+
+/* INTERACTIVE NOTE */
+
+.interaction-note {
+    padding: 16px 20px;
+    margin: 24px 0;
+    background: #f2f5fa;
+    border-left: 4px solid #8063a6;
+    border-radius: 6px;
+    color: #526579;
+    font-size: 14px;
+}
+
+/* STORY TRANSITIONS */
+
+.transition-block {
+    max-width: 850px;
+    padding: 25px 30px;
+    margin: 30px auto 0;
+    background: #edf7f6;
+    border-radius: 9px;
+    text-align: center;
+}
+
+.transition-block p {
+    margin: 0;
+    font-size: 17px;
+    font-style: italic;
+    color: #246b70;
+}
+
+/* VEGA EMBEDDING */
 
 .vega-embed {
     max-width: 100%;
@@ -108,207 +590,349 @@ section {
     max-width: 100%;
 }
 
-.vega-embed canvas,
-.vega-embed svg {
+.vega-embed svg,
+.vega-embed canvas {
     max-width: 100%;
     height: auto;
 }
 
-/* 6. IMAGES */
-
-img {
-    display: block;
+#age_sex_chart,
+#disability_chart,
+#service_chart,
+#gp_barriers_chart,
+#gp_age_chart,
+#gp_waffle {
+    width: 100%;
     max-width: 100%;
-    height: auto;
+    min-width: 0;
 }
 
-/* 7. LINKS */
+/* DROPDOWN CONTROLS */
+
+.vega-bindings {
+    margin: 12px 0 20px;
+    font-size: 14px;
+    color: #43566a;
+}
+
+.vega-bindings select {
+    padding: 8px 12px;
+    margin-left: 8px;
+    border: 1px solid #cbd5df;
+    border-radius: 6px;
+    background: white;
+    color: #243447;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+/* LINKS */
 
 a {
     color: #176c99;
-    text-decoration: underline;
 }
 
 a:hover {
     color: #104b70;
 }
 
-/* 8. FOOTER */
-
-footer {
-    margin-top: 70px;
-    padding: 25px 0;
-
-    border-top: 1px solid #d7e0e8;
-
-    text-align: center;
-    font-size: 14px;
-    color: #657586;
-}
-
-/* 9. TABLET RESPONSIVE */
+/* TABLET */
 
 @media (max-width: 900px) {
 
     body {
-        padding: 24px 18px;
+        padding: 18px;
     }
 
-    section {
-        padding: 22px;
+    .hero {
+        padding: 50px 35px 30px;
     }
 
-    h2 {
-        margin-top: 40px;
+    .story-section {
+        padding: 32px 24px;
+    }
+
+    .intro-section {
+        padding: 30px;
+    }
+
+    #ndis .split-layout {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    #ndis .reverse-layout .map-panel,
+    #ndis .reverse-layout .insight-panel {
+        order: initial;
+    }
+
+    .compact-map {
+        max-width: 500px;
+    }
+
+    .chart-container {
+        overflow-x: auto;
+        justify-content: flex-start;
     }
 }
 
-/* 10. SMALL SCREEN RESPONSIVE */
+/* MOBILE */
 
-@media (max-width: 600px) {
+@media (max-width: 650px) {
 
     body {
-        padding: 16px 12px;
+        padding: 12px;
         font-size: 15px;
     }
 
-    h1 {
-        margin-top: 20px;
+    .hero {
+        padding: 38px 22px 25px;
     }
 
-    h2 {
-        margin-top: 32px;
+    .hero h1 {
+        font-size: clamp(30px, 8vw, 42px);
+        letter-spacing: -0.5px;
+    }
+
+    .hero-subtitle {
+        font-size: 15px;
+        margin-bottom: 28px;
+    }
+
+    .hero-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .stat-primary,
+    .stat-secondary {
+        padding: 22px;
+    }
+
+    .stat-number {
+        font-size: 48px;
+    }
+
+    .hero-bottom span {
+        font-size: 10px;
+    }
+
+    .intro-section {
+        padding: 24px 20px;
+        margin-bottom: 35px;
+    }
+
+    .intro-section h2 {
+        font-size: 24px;
+    }
+
+    .story-section {
+        padding: 24px 16px;
+        margin-bottom: 35px;
+    }
+
+    .section-heading {
+        gap: 12px;
+        align-items: flex-start;
+    }
+
+    .section-number {
+        font-size: 30px;
+    }
+
+    .section-heading h2 {
+        font-size: 23px;
+    }
+
+    .section-intro {
+        font-size: 15px;
+        margin-bottom: 30px;
+    }
+
+    .chart-block {
+        margin-bottom: 35px;
+        padding-bottom: 30px;
+    }
+
+    .visual-panel {
+        padding: 12px;
+    }
+
+    .chart-container {
+        margin: 12px auto;
+        overflow-x: auto;
+    }
+
+    .waffle-insights {
+        grid-template-columns: 1fr;
+    }
+
+    .dual-stat {
+        grid-template-columns: 1fr;
+    }
+
+    .compact-map {
+        max-width: 100%;
+    }
+
+    .transition-block {
+        padding: 20px;
+    }
+
+    .transition-block p {
+        font-size: 15px;
     }
 
     p {
         font-size: 15px;
     }
+    
+/* STORYTELLING SECTIONS */
 
-    section {
-        padding: 16px;
-        margin: 25px 0;
-    }
-
-    .chart-container,
-    #disability_chart
-    #age_sex_chart,
-    #service_chart,
-    #gp_barriers_chart {
-        padding: 10px 0;
-    }
-    /* Chart 4 - GP Barriers */
-#gp_barriers_chart {
+.story-section {
     width: 100%;
     max-width: 1100px;
-    margin: 30px auto;
-    overflow-x: auto;
+    margin: 36px auto;
+    padding: 32px;
+    background: #ffffff;
+    border: 1px solid #e3e9ef;
+    border-radius: 12px;
 }
 
-#gp_barriers_chart .vega-embed {
-    width: max-content;
-    max-width: none;
+.section-intro {
+    max-width: 900px;
+    margin-bottom: 24px;
 }
-/* Chart 5 - Small Multiples Dot Plot */
+
+.section-kicker {
+    margin: 0 0 8px;
+    color: #168d98;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+.story-section h2,
+.chapter-heading h2 {
+    margin: 0 0 18px;
+    color: #24577a;
+    font-size: clamp(24px, 3vw, 30px);
+    line-height: 1.3;
+}
+
+.section-intro p:not(.section-kicker),
+.chapter-heading p:not(.section-kicker) {
+    font-size: 16px;
+    line-height: 1.85;
+    color: #455b70;
+    margin: 0 0 16px;
+}
+
+.highlight {
+    color: #087f88;
+    font-weight: 700;
+}
+
+.chart-panel {
+    width: 100%;
+    min-width: 0;
+    padding: 24px;
+    background: #ffffff;
+    border: 1px solid #e3e9ef;
+    border-radius: 12px;
+}
+
+.chart-panel > div {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    text-align: center;
+}
+
+.figure-caption {
+    margin: 20px 0 0;
+    color: #75869a;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.interaction-note {
+    margin-top: 18px !important;
+    padding: 14px 18px;
+    background: #edf8f8;
+    border-left: 4px solid #168d98;
+    border-radius: 4px;
+    color: #31576a !important;
+    font-size: 14px !important;
+}
+
+.chapter-heading {
+    width: 100%;
+    max-width: 1100px;
+    margin: 56px auto 30px;
+    padding: 36px 32px;
+    background: #f2f8fc;
+    border-left: 5px solid #168d98;
+    border-radius: 10px;
+}
+
+.chapter-heading h2 {
+    font-size: clamp(28px, 3.5vw, 36px);
+    color: #173b57;
+}
+
+/* VEGA CHART CONTAINERS */
+
+#disability_chart,
+#service_chart,
+#gp_barriers_chart,
 #gp_age_chart {
     width: 100%;
-    max-width: 1100px;
-    margin: 35px auto;
-    overflow-x: auto;
-}
-
-#gp_age_chart .vega-embed {
-    width: max-content;
-    max-width: none;
-}
-
-/* NDIS Choropleth Map */
-#ndis_map {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin: 30px auto;
-    overflow-x: auto;
-}
-
-/* Keep the Vega-Lite map within the page width */
-#ndis_map .vega-embed {
     max-width: 100%;
-}
-
-/* Style the reporting period dropdown */
-#ndis_map select {
-    padding: 6px 10px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: white;
-    cursor: pointer;
-}
-
-
-#gp_waffle {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin: 25px auto;
-}
-
-#gp_waffle .vega-embed {
-  max-width: 100%;
-}
-
-
-}
-/* KPI SECTION */
-.kpi-section {
-    display: grid !important;
-    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-    gap: 16px !important;
-    width: 100%;
-    max-width: 1100px;
-    margin: 30px auto 50px;
-    padding: 0;
-    background: transparent;
-}
-
-/* INDIVIDUAL KPI CARDS */
-.kpi-section > .kpi-card {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    gap: 8px;
     min-width: 0;
-    padding: 22px;
-    margin: 0;
-    background: white;
-    border: 1px solid #e8e2ef;
-    border-radius: 4px;
+    margin: 0 auto;
+    padding: 0;
 }
 
-.kpi-card .kpi-label {
-    margin: 0;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    color: #62567d;
-}
+/* RESPONSIVE */
 
-.kpi-card h2 {
-    margin: 0;
-    font-family: Georgia, serif;
-    font-size: 35px;
-    color: #493479;
-}
-
-.kpi-card .kpi-note {
-    margin: 0;
-    font-size: 12px;
-    color: #777;
-}
-
-@media (max-width: 650px) {
-    .kpi-section {
-        grid-template-columns: 1fr !important;
+@media (max-width: 900px) {
+    .story-section {
+        padding: 24px;
     }
+
+    .chart-panel {
+        padding: 16px;
+    }
+
+    .chapter-heading {
+        padding: 28px 24px;
+    }
+}
+
+@media (max-width: 600px) {
+    .story-section {
+        padding: 18px;
+        margin: 24px auto;
+    }
+
+    .chart-panel {
+        padding: 12px;
+    }
+
+    .chapter-heading {
+        padding: 22px 18px;
+        margin: 36px auto 22px;
+    }
+
+    .section-intro p:not(.section-kicker),
+    .chapter-heading p:not(.section-kicker) {
+        font-size: 15px;
+    }
+
+    .figure-caption {
+        font-size: 12px;
+    }
+}
+
 }

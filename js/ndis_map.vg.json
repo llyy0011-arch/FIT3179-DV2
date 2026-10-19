@@ -1,19 +1,20 @@
 
 {
   "$schema": "https://vega.github.io/schema/vega/v5.json",
-  "description": "Share of Australian NDIS participants by state, December 2022",
-  "width": 750,
-  "height": 460,
-  "padding": 15,
+  "description": "Share of published NDIS participants across Australia's eight states and territories, December 2022",
+  "width": 440,
+  "height": 340,
+  "padding": 10,
   "autosize": "pad",
   "background": "white",
 
   "title": {
     "text": "Share of NDIS Participants by State",
-    "subtitle": "Percentage of Australia's published NDIS participants, December 2022",
+    "subtitle": "Share across eight states and territories, December 2022",
     "anchor": "middle",
-    "fontSize": 20,
-    "subtitleFontSize": 13
+    "fontSize": 15,
+    "subtitleFontSize": 10,
+    "offset": 12
   },
 
   "data": [
@@ -35,6 +36,10 @@
         },
         {
           "type": "filter",
+          "expr": "indexof(['New South Wales', 'Victoria', 'Queensland', 'South Australia', 'Western Australia', 'Tasmania', 'Northern Territory', 'Australian Capital Territory', 'NSW', 'VIC', 'QLD', 'SA', 'WA', 'TAS', 'NT', 'ACT'], datum.state) >= 0"
+        },
+        {
+          "type": "filter",
           "expr": "datum.participants != null && datum.participants !== '' && datum.participants !== '<11'"
         },
         {
@@ -47,11 +52,21 @@
           "expr": "isValid(datum.count) && isFinite(datum.count) && datum.count >= 0"
         },
         {
+          "type": "formula",
+          "expr": "datum.state === 'NSW' ? 'New South Wales' : datum.state === 'VIC' ? 'Victoria' : datum.state === 'QLD' ? 'Queensland' : datum.state === 'SA' ? 'South Australia' : datum.state === 'WA' ? 'Western Australia' : datum.state === 'TAS' ? 'Tasmania' : datum.state === 'NT' ? 'Northern Territory' : datum.state === 'ACT' ? 'Australian Capital Territory' : datum.state",
+          "as": "state_full"
+        },
+        {
           "type": "aggregate",
-          "groupby": ["state"],
+          "groupby": ["state_full"],
           "fields": ["count"],
           "ops": ["sum"],
           "as": ["participants_total"]
+        },
+        {
+          "type": "formula",
+          "expr": "datum.state_full",
+          "as": "state"
         },
         {
           "type": "joinaggregate",
@@ -123,14 +138,15 @@
   "legends": [
     {
       "fill": "colour_scale",
-      "title": "Share of NDIS Participants (%)",
+      "title": "Share of participants (%)",
       "orient": "bottom",
       "direction": "horizontal",
-      "gradientLength": 300,
-      "gradientThickness": 12,
+      "gradientLength": 230,
+      "gradientThickness": 10,
       "format": ".1f",
-      "titleFontSize": 13,
-      "labelFontSize": 11
+      "titleFontSize": 11,
+      "labelFontSize": 10,
+      "offset": 12
     }
   ],
 
@@ -162,21 +178,13 @@
             "value": "#ffffff"
           },
           "strokeWidth": {
-            "value": 1.5
+            "value": 1
           },
           "tooltip": {
-            "signal": "{'State': datum.state, 'Share of Australian NDIS participants': isValid(datum.percentage) ? format(datum.percentage, '.2f') + '%' : 'No data', 'Published participants': isValid(datum.participants_total) ? format(datum.participants_total, ',.0f') : 'No data'}"
+            "signal": "{'State': datum.state, 'Share of eight-state/territory total': isValid(datum.percentage) ? format(datum.percentage, '.2f') + '%' : 'No data', 'Published participants': isValid(datum.participants_total) ? format(datum.participants_total, ',.0f') : 'No data'}"
           }
         }
       }
     }
   ]
 }
-
-
-
-
-
-
-
-
