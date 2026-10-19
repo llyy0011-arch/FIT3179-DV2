@@ -61,6 +61,55 @@
     <div id="gp_barriers_chart"></div>
     <div id="gp_age_chart"></div>
 
+    
+<section class="chart-section">
+  <h2>Who Faces Barriers to GP Access?</h2>
+
+  <p>
+    Access to healthcare is not equal across age groups
+    and sexes. Explore how cost and other barriers affect
+    whether people with disability can see a GP when needed.
+  </p>
+
+  <div id="gp_waffle"></div>
+
+  <p class="map-note">
+    Each square represents approximately 1% of the selected
+    group. Percentages are rounded for display.
+    Source: AIHW, Table ACCE4b, 2022.
+  </p>
+</section>
+
+
+<section class="chart-section">
+  <h2>NDIS Participation Across Australia</h2>
+
+  <p>
+    Explore how NDIS participant numbers vary across
+    Australian states and territories in December 2022.
+    Larger circles represent higher participant counts.
+  </p>
+
+  <div id="ndis_map"></div>
+
+  <p class="map-note">
+  </p>
+</section>
+
+<!-- Proportional Symbol Map -->
+<section class="chart-section">
+  <h2>Comparing NDIS Participation Across States</h2>
+
+  <p>
+    Compare NDIS participant numbers across Australia.
+    Larger circles represent higher participant counts
+    in each state and territory.
+  </p>
+
+  <div id="ndis_symbol_map"></div>
+</section>
+
+
 <script>
     // Chart 1: Grouped Bar Chart
     vegaEmbed("#age_sex_chart", "js/age_sex.vg.json")
@@ -77,6 +126,24 @@
     // Chart 5: Small Multiples Dot Plot
     vegaEmbed("#gp_age_chart", "js/gp_age.vg.json")
     .catch(console.error);
+    
+     // State-level Choropleth Map
+vegaEmbed("#ndis_map", "js/ndis_map.vg.json", {
+  actions: false
+}).catch(console.error);
+
+// Proportional Symbol Map
+vegaEmbed("#ndis_symbol_map", "js/ndis_overview.vg.json", {
+  actions: false
+}).catch(console.error);
+
+
+vegaEmbed("#gp_waffle", "js/gp_waffle.vg.json", {
+  actions: false
+}).catch(console.error);
+
+
+
 </script>
 
 </body>

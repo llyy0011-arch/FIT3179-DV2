@@ -1,0 +1,9 @@
+﻿sex,age_group,due_to_cost,other_reasons,saw_gp
+Males,Under 25,4.6,15.0,80.2
+Males,25–44,14.2,36.7,48.1
+Males,45–64,8.3,28.2,63.5
+Males,65 and over,1.5,15.4,83.1
+Females,Under 25,11.0,25.0,64.6
+Females,25–44,22.6,34.7,42.1
+Females,45–64,13.2,32.9,54.4
+Females,65 and over,2.7,20.9,76.2

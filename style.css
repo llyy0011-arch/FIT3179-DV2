@@ -221,6 +221,42 @@ footer {
     max-width: none;
 }
 
+/* NDIS Choropleth Map */
+#ndis_map {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 30px auto;
+    overflow-x: auto;
+}
+
+/* Keep the Vega-Lite map within the page width */
+#ndis_map .vega-embed {
+    max-width: 100%;
+}
+
+/* Style the reporting period dropdown */
+#ndis_map select {
+    padding: 6px 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: white;
+    cursor: pointer;
+}
+
+
+#gp_waffle {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 25px auto;
+}
+
+#gp_waffle .vega-embed {
+  max-width: 100%;
+}
+
 
 }
 /* KPI SECTION */

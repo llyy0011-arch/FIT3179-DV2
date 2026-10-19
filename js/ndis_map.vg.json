@@ -1,0 +1,182 @@
+
+{
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "description": "Share of Australian NDIS participants by state, December 2022",
+  "width": 750,
+  "height": 460,
+  "padding": 15,
+  "autosize": "pad",
+  "background": "white",
+
+  "title": {
+    "text": "Share of NDIS Participants by State",
+    "subtitle": "Percentage of Australia's published NDIS participants, December 2022",
+    "anchor": "middle",
+    "fontSize": 20,
+    "subtitleFontSize": 13
+  },
+
+  "data": [
+    {
+      "name": "state_totals",
+      "url": "Data/ndis_2026_clean.csv",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "report_date": "string",
+          "state": "string",
+          "participants": "string"
+        }
+      },
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "datum.report_date === '2022-12-31'"
+        },
+        {
+          "type": "filter",
+          "expr": "datum.participants != null && datum.participants !== '' && datum.participants !== '<11'"
+        },
+        {
+          "type": "formula",
+          "expr": "toNumber(datum.participants)",
+          "as": "count"
+        },
+        {
+          "type": "filter",
+          "expr": "isValid(datum.count) && isFinite(datum.count) && datum.count >= 0"
+        },
+        {
+          "type": "aggregate",
+          "groupby": ["state"],
+          "fields": ["count"],
+          "ops": ["sum"],
+          "as": ["participants_total"]
+        },
+        {
+          "type": "joinaggregate",
+          "fields": ["participants_total"],
+          "ops": ["sum"],
+          "as": ["australia_total"]
+        },
+        {
+          "type": "formula",
+          "expr": "datum.participants_total / datum.australia_total * 100",
+          "as": "percentage"
+        }
+      ]
+    },
+
+    {
+      "name": "boundaries",
+      "url": "Data/state_2021.json",
+      "format": {
+        "type": "topojson",
+        "feature": "LGA_2021_AUST_GDA94"
+      },
+      "transform": [
+        {
+          "type": "formula",
+          "expr": "datum.properties.STE_NAME21",
+          "as": "state"
+        },
+        {
+          "type": "lookup",
+          "from": "state_totals",
+          "key": "state",
+          "fields": ["state"],
+          "values": ["participants_total", "percentage"],
+          "as": ["participants_total", "percentage"]
+        }
+      ]
+    }
+  ],
+
+  "projections": [
+    {
+      "name": "aus_projection",
+      "type": "mercator",
+      "fit": {
+        "signal": "data('boundaries')"
+      },
+      "size": [
+        {"signal": "width"},
+        {"signal": "height"}
+      ]
+    }
+  ],
+
+  "scales": [
+    {
+      "name": "colour_scale",
+      "type": "linear",
+      "domain": {
+        "data": "state_totals",
+        "field": "percentage"
+      },
+      "range": ["#deebf7", "#08519c"],
+      "zero": true,
+      "nice": true
+    }
+  ],
+
+  "legends": [
+    {
+      "fill": "colour_scale",
+      "title": "Share of NDIS Participants (%)",
+      "orient": "bottom",
+      "direction": "horizontal",
+      "gradientLength": 300,
+      "gradientThickness": 12,
+      "format": ".1f",
+      "titleFontSize": 13,
+      "labelFontSize": 11
+    }
+  ],
+
+  "marks": [
+    {
+      "type": "shape",
+      "from": {
+        "data": "boundaries"
+      },
+      "transform": [
+        {
+          "type": "geoshape",
+          "projection": "aus_projection"
+        }
+      ],
+      "encode": {
+        "update": {
+          "fill": [
+            {
+              "test": "isValid(datum.percentage)",
+              "scale": "colour_scale",
+              "field": "percentage"
+            },
+            {
+              "value": "#eeeeee"
+            }
+          ],
+          "stroke": {
+            "value": "#ffffff"
+          },
+          "strokeWidth": {
+            "value": 1.5
+          },
+          "tooltip": {
+            "signal": "{'State': datum.state, 'Share of Australian NDIS participants': isValid(datum.percentage) ? format(datum.percentage, '.2f') + '%' : 'No data', 'Published participants': isValid(datum.participants_total) ? format(datum.participants_total, ',.0f') : 'No data'}"
+          }
+        }
+      }
+    }
+  ]
+}
+
+
+
+
+
+
+
+

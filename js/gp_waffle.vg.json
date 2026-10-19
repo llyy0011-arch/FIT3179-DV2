@@ -1,0 +1,249 @@
+
+{
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "description": "Interactive waffle chart comparing GP access barriers by sex and age in 2022",
+  "width": 650,
+  "height": 330,
+  "padding": 15,
+  "background": "white",
+
+  "title": {
+    "text": "Who Faces Barriers to GP Access?",
+    "subtitle": "Reasons for unmet GP needs by sex and age group, 2022",
+    "anchor": "middle",
+    "fontSize": 20,
+    "subtitleFontSize": 13,
+    "offset": 20
+  },
+
+  "signals": [
+    {
+      "name": "selected_age",
+      "value": "25–44",
+      "bind": {
+        "input": "select",
+        "name": "Select age group: ",
+        "options": [
+          "Under 25",
+          "25–44",
+          "45–64",
+          "65 and over"
+        ]
+      }
+    }
+  ],
+
+  "data": [
+    {
+      "name": "gp_data",
+      "url": "Data/gp_waffle.csv",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "sex": "string",
+          "age_group": "string",
+          "due_to_cost": "number",
+          "other_reasons": "number",
+          "saw_gp": "number"
+        }
+      }
+    },
+    {
+      "name": "males",
+      "source": "gp_data",
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "datum.sex === 'Males' && datum.age_group === selected_age"
+        }
+      ]
+    },
+    {
+      "name": "females",
+      "source": "gp_data",
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "datum.sex === 'Females' && datum.age_group === selected_age"
+        }
+      ]
+    },
+    {
+      "name": "grid",
+      "transform": [
+        {
+          "type": "sequence",
+          "start": 0,
+          "stop": 100,
+          "step": 1,
+          "as": "index"
+        }
+      ]
+    }
+  ],
+
+  "scales": [
+    {
+      "name": "status_colors",
+      "type": "ordinal",
+      "domain": [
+        "Due to cost",
+        "Due to other reasons",
+        "Saw GP when needed",
+        "Unallocated"
+      ],
+      "range": [
+        "#c75c59",
+        "#e6a66b",
+        "#579b9a",
+        "#e5e7eb"
+      ]
+    }
+  ],
+
+  "legends": [
+    {
+      "fill": "status_colors",
+      "orient": "bottom",
+      "direction": "horizontal",
+      "columns": 2,
+      "title": "GP access outcome",
+      "symbolType": "square",
+      "symbolSize": 130,
+      "labelFontSize": 12,
+      "titleFontSize": 13,
+      "offset": 25
+    }
+  ],
+
+  "marks": [
+    {
+      "type": "group",
+      "encode": {
+        "enter": {
+          "x": {"value": 60},
+          "y": {"value": 55},
+          "width": {"value": 230},
+          "height": {"value": 270}
+        }
+      },
+      "marks": [
+        {
+          "type": "text",
+          "encode": {
+            "update": {
+              "x": {"value": 115},
+              "y": {"value": -15},
+              "text": {"value": "Males"},
+              "align": {"value": "center"},
+              "fontSize": {"value": 17},
+              "fontWeight": {"value": "bold"}
+            }
+          }
+        },
+        {
+          "type": "symbol",
+          "from": {"data": "grid"},
+          "encode": {
+            "update": {
+              "x": {
+                "signal": "(datum.index % 10) * 23 + 11"
+              },
+              "y": {
+                "signal": "floor(datum.index / 10) * 23 + 11"
+              },
+              "shape": {"value": "square"},
+              "size": {"value": 400},
+              "fill": {
+                "signal": "length(data('males')) === 0 ? '#e5e7eb' : scale('status_colors', datum.index < round(data('males')[0].due_to_cost) ? 'Due to cost' : datum.index < round(data('males')[0].due_to_cost + data('males')[0].other_reasons) ? 'Due to other reasons' : datum.index < round(data('males')[0].due_to_cost + data('males')[0].other_reasons + data('males')[0].saw_gp) ? 'Saw GP when needed' : 'Unallocated')"
+              },
+              "tooltip": {
+                "signal": "length(data('males')) === 0 ? {'Status': 'No data'} : {'Sex': 'Males', 'Age group': selected_age, 'Due to cost': format(data('males')[0].due_to_cost, '.1f') + '%', 'Other reasons': format(data('males')[0].other_reasons, '.1f') + '%', 'Saw GP when needed': format(data('males')[0].saw_gp, '.1f') + '%'}"
+              }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "update": {
+              "x": {"value": 115},
+              "y": {"value": 255},
+              "align": {"value": "center"},
+              "fontSize": {"value": 14},
+              "fontWeight": {"value": "bold"},
+              "fill": {"value": "#c75c59"},
+              "text": {
+                "signal": "length(data('males')) ? format(data('males')[0].due_to_cost, '.1f') + '% due to cost' : 'No data'"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "encode": {
+        "enter": {
+          "x": {"value": 370},
+          "y": {"value": 55},
+          "width": {"value": 230},
+          "height": {"value": 270}
+        }
+      },
+      "marks": [
+        {
+          "type": "text",
+          "encode": {
+            "update": {
+              "x": {"value": 115},
+              "y": {"value": -15},
+              "text": {"value": "Females"},
+              "align": {"value": "center"},
+              "fontSize": {"value": 17},
+              "fontWeight": {"value": "bold"}
+            }
+          }
+        },
+        {
+          "type": "symbol",
+          "from": {"data": "grid"},
+          "encode": {
+            "update": {
+              "x": {
+                "signal": "(datum.index % 10) * 23 + 11"
+              },
+              "y": {
+                "signal": "floor(datum.index / 10) * 23 + 11"
+              },
+              "shape": {"value": "square"},
+              "size": {"value": 400},
+              "fill": {
+                "signal": "length(data('females')) === 0 ? '#e5e7eb' : scale('status_colors', datum.index < round(data('females')[0].due_to_cost) ? 'Due to cost' : datum.index < round(data('females')[0].due_to_cost + data('females')[0].other_reasons) ? 'Due to other reasons' : datum.index < round(data('females')[0].due_to_cost + data('females')[0].other_reasons + data('females')[0].saw_gp) ? 'Saw GP when needed' : 'Unallocated')"
+              },
+              "tooltip": {
+                "signal": "length(data('females')) === 0 ? {'Status': 'No data'} : {'Sex': 'Females', 'Age group': selected_age, 'Due to cost': format(data('females')[0].due_to_cost, '.1f') + '%', 'Other reasons': format(data('females')[0].other_reasons, '.1f') + '%', 'Saw GP when needed': format(data('females')[0].saw_gp, '.1f') + '%'}"
+              }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "update": {
+              "x": {"value": 115},
+              "y": {"value": 255},
+              "align": {"value": "center"},
+              "fontSize": {"value": 14},
+              "fontWeight": {"value": "bold"},
+              "fill": {"value": "#c75c59"},
+              "text": {
+                "signal": "length(data('females')) ? format(data('females')[0].due_to_cost, '.1f') + '% due to cost' : 'No data'"
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
