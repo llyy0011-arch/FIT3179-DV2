@@ -1699,4 +1699,10 @@ p {
     }
 
 }
+/* Storytelling paragraphs throughout the website */
+main p:not(.chart-caption):not(.chart-description),
+main p:not(.chart-caption):not(.chart-description) strong {
+  font-size: 20px !important;
+  line-height: 1.8 !important;
+}
 
