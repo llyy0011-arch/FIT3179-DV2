@@ -1,0 +1,321 @@
+
+{
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "description": "Interactive Marimekko chart of medical specialist access by remoteness.",
+  "width": 740,
+  "height": 380,
+  "padding": {
+    "top": 55,
+    "left": 55,
+    "right": 25,
+    "bottom": 85
+  },
+  "autosize": "pad",
+  "background": "white",
+
+  "data": [
+    {
+      "name": "healthcare",
+      "url": "Data/remoteness.csv",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "Remoteness": "string",
+          "Total": "number",
+          "Unmet need": "number",
+          "Saw specialist": "number",
+          "Not needed": "number"
+        }
+      },
+      "transform": [
+        {
+          "type": "formula",
+          "as": "GroupOrder",
+          "expr": "datum.Remoteness === 'Major cities' ? 1 : datum.Remoteness === 'Inner regional' ? 2 : 3"
+        },
+        {
+          "type": "collect",
+          "sort": {
+            "field": "GroupOrder",
+            "order": "ascending"
+          }
+        },
+        {
+          "type": "window",
+          "ops": ["sum"],
+          "fields": ["Total"],
+          "as": ["CumulativeTotal"],
+          "sort": {
+            "field": "GroupOrder",
+            "order": "ascending"
+          },
+          "frame": [null, 0]
+        },
+        {
+          "type": "formula",
+          "as": "x0",
+          "expr": "datum.CumulativeTotal - datum.Total"
+        },
+        {
+          "type": "formula",
+          "as": "x1",
+          "expr": "datum.CumulativeTotal"
+        },
+        {
+          "type": "formula",
+          "as": "Not reported",
+          "expr": "max(0, 100 - datum['Unmet need'] - datum['Saw specialist'] - datum['Not needed'])"
+        },
+        {
+          "type": "fold",
+          "fields": [
+            "Unmet need",
+            "Saw specialist",
+            "Not needed",
+            "Not reported"
+          ],
+          "as": ["Outcome", "Percentage"]
+        },
+        {
+          "type": "formula",
+          "as": "OutcomeOrder",
+          "expr": "datum.Outcome === 'Unmet need' ? 1 : datum.Outcome === 'Saw specialist' ? 2 : datum.Outcome === 'Not needed' ? 3 : 4"
+        },
+        {
+          "type": "stack",
+          "groupby": ["Remoteness"],
+          "field": "Percentage",
+          "sort": {
+            "field": "OutcomeOrder",
+            "order": "ascending"
+          },
+          "offset": "zero",
+          "as": ["y0", "y1"]
+        }
+      ]
+    },
+    {
+      "name": "groups",
+      "source": "healthcare",
+      "transform": [
+        {
+          "type": "aggregate",
+          "groupby": [
+            "Remoteness",
+            "x0",
+            "x1",
+            "Total",
+            "GroupOrder"
+          ]
+        },
+        {
+          "type": "formula",
+          "as": "midpoint",
+          "expr": "(datum.x0 + datum.x1) / 2"
+        }
+      ]
+    }
+  ],
+
+  "scales": [
+    {
+      "name": "xscale",
+      "type": "linear",
+      "domain": [0, 5305.7],
+      "range": "width",
+      "zero": true,
+      "nice": false
+    },
+    {
+      "name": "yscale",
+      "type": "linear",
+      "domain": [0, 100],
+      "range": "height",
+      "zero": true,
+      "nice": false
+    },
+    {
+      "name": "color",
+      "type": "ordinal",
+      "domain": [
+        "Unmet need",
+        "Saw specialist",
+        "Not needed",
+        "Not reported"
+      ],
+      "range": [
+        "#C45D89",
+        "#F0BBD1",
+        "#A9B7C6",
+        "#E9E9E9"
+      ]
+    }
+  ],
+
+  "axes": [
+    {
+      "orient": "left",
+      "scale": "yscale",
+      "title": "Share of population (%)",
+      "values": [0, 20, 40, 60, 80, 100],
+      "grid": true,
+      "gridColor": "#E8E8E8",
+      "labelColor": "#555555",
+      "titleColor": "#333333",
+      "domain": false,
+      "tickColor": "#CCCCCC"
+    }
+  ],
+
+  "legends": [
+    {
+      "fill": "color",
+      "orient": "top",
+      "direction": "horizontal",
+      "title": null,
+      "symbolType": "square",
+      "symbolSize": 150,
+      "labelFontSize": 12,
+      "labelColor": "#444444",
+      "columnPadding": 18
+    }
+  ],
+
+  "signals": [
+    {
+      "name": "hovered",
+      "value": null,
+      "on": [
+        {
+          "events": "@segments:mouseover",
+          "update": "datum.Remoteness"
+        },
+        {
+          "events": "@segments:mouseout",
+          "update": "null"
+        }
+      ]
+    }
+  ],
+
+  "marks": [
+    {
+      "name": "segments",
+      "type": "rect",
+      "from": {
+        "data": "healthcare"
+      },
+      "encode": {
+        "enter": {
+          "x": {
+            "scale": "xscale",
+            "field": "x0"
+          },
+          "x2": {
+            "scale": "xscale",
+            "field": "x1"
+          },
+          "y": {
+            "scale": "yscale",
+            "field": "y1"
+          },
+          "y2": {
+            "scale": "yscale",
+            "field": "y0"
+          },
+          "fill": {
+            "scale": "color",
+            "field": "Outcome"
+          },
+          "stroke": {
+            "value": "white"
+          },
+          "strokeWidth": {
+            "value": 2
+          },
+          "tooltip": {
+            "signal": "{'Region': datum.Remoteness, 'Healthcare outcome': datum.Outcome, 'Share (%)': format(datum.Percentage, '.1f'), 'Population (thousands)': format(datum.Total, ',.1f')}"
+          }
+        },
+        "update": {
+          "fillOpacity": {
+            "signal": "hovered === null || hovered === datum.Remoteness ? 1 : 0.35"
+          },
+          "strokeWidth": {
+            "signal": "hovered === datum.Remoteness ? 3 : 2"
+          }
+        }
+      }
+    },
+    {
+      "type": "text",
+      "from": {
+        "data": "groups"
+      },
+      "encode": {
+        "enter": {
+          "x": {
+            "scale": "xscale",
+            "field": "midpoint"
+          },
+          "y": {
+            "signal": "height + 17"
+          },
+          "align": {
+            "value": "center"
+          },
+          "baseline": {
+            "value": "top"
+          },
+          "fontSize": {
+            "value": 12
+          },
+          "fontWeight": {
+            "value": "bold"
+          },
+          "fill": {
+            "value": "#444444"
+          },
+          "text": {
+            "field": "Remoteness"
+          },
+          "limit": {
+            "signal": "scale('xscale', datum.x1) - scale('xscale', datum.x0) - 8"
+          }
+        }
+      }
+    },
+    {
+      "type": "text",
+      "from": {
+        "data": "groups"
+      },
+      "encode": {
+        "enter": {
+          "x": {
+            "scale": "xscale",
+            "field": "midpoint"
+          },
+          "y": {
+            "signal": "height + 38"
+          },
+          "align": {
+            "value": "center"
+          },
+          "baseline": {
+            "value": "top"
+          },
+          "fontSize": {
+            "value": 11
+          },
+          "fill": {
+            "value": "#777777"
+          },
+          "text": {
+            "signal": "format(datum.Total, ',.1f') + 'k'"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,126 @@
+
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "background": "white",
+  "width": 720,
+  "height": 400,
+  "padding": 10,
+  "title": {
+    "text": "Where Is the Need for Daily Assistance Greatest?",
+    "subtitle": [
+      "Core activity need for assistance across Australian states and territories, 2021",
+      "Circle area represents the number of people needing assistance"
+    ],
+    "anchor": "start",
+    "font": "Arial",
+    "fontSize": 20,
+    "fontWeight": "bold",
+    "subtitleFontSize": 12,
+    "subtitleColor": "#64748B",
+    "offset": 20
+  },
+  "data": {
+    "values": [
+      {"state":"WA","name":"Western Australia","need":122348,"population":2660026,"x":130,"y":215},
+      {"state":"NT","name":"Northern Territory","need":8308,"population":232605,"x":265,"y":95},
+      {"state":"SA","name":"South Australia","need":118634,"population":1781516,"x":280,"y":245},
+      {"state":"QLD","name":"Queensland","need":309366,"population":5156138,"x":425,"y":120},
+      {"state":"NSW","name":"New South Wales","need":464712,"population":8072163,"x":505,"y":275},
+      {"state":"VIC","name":"Victoria","need":382073,"population":6503491,"x":345,"y":365},
+      {"state":"TAS","name":"Tasmania","need":38023,"population":557571,"x":540,"y":395},
+      {"state":"ACT","name":"Australian Capital Territory","need":20782,"population":454499,"x":640,"y":295}
+    ]
+  },
+  "transform": [
+    {
+      "calculate": "datum.need / datum.population * 100",
+      "as": "rate"
+    }
+  ],
+  "layer": [
+    {
+      "mark": {
+        "type": "circle",
+        "opacity": 0.96,
+        "stroke": "white",
+        "strokeWidth": 2
+      },
+      "encoding": {
+        "x": {
+          "field": "x",
+          "type": "quantitative",
+          "scale": {"domain": [0, 720]},
+          "axis": null
+        },
+        "y": {
+          "field": "y",
+          "type": "quantitative",
+          "scale": {"domain": [400, 0]},
+          "axis": null
+        },
+        "size": {
+          "field": "need",
+          "type": "quantitative",
+          "scale": {
+            "type": "linear",
+            "domain": [0, 464712],
+            "range": [0, 14500]
+          },
+          "legend": null
+        },
+        "color": {
+          "field": "rate",
+          "type": "quantitative",
+          "scale": {
+            "domain": [3, 7],
+            "range": ["#DCECF2", "#176489"]
+          },
+          "legend": {
+            "title": "Population needing assistance (%)",
+            "orient": "bottom",
+            "direction": "horizontal",
+            "gradientLength": 240,
+            "gradientThickness": 12,
+            "titleFontSize": 12,
+            "labelFontSize": 11,
+            "offset": 20,
+            "format": ".1f"
+          }
+        },
+        "tooltip": [
+          {"field":"name","type":"nominal","title":"State"},
+          {"field":"need","type":"quantitative","title":"People needing assistance","format":","},
+          {"field":"rate","type":"quantitative","title":"Population share (%)","format":".2f"}
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "font": "Arial",
+        "fontSize": 13,
+        "fontWeight": "bold",
+        "color": "#17364A"
+      },
+      "encoding": {
+        "x": {
+          "field": "x",
+          "type": "quantitative",
+          "scale": {"domain": [0, 720]},
+          "axis": null
+        },
+        "y": {
+          "field": "y",
+          "type": "quantitative",
+          "scale": {"domain": [400, 0]},
+          "axis": null
+        },
+        "text": {"field": "state"}
+      }
+    }
+  ],
+  "config": {
+    "view": {"stroke": null},
+    "font": "Arial"
+  }
+}
