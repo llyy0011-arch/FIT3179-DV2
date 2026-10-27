@@ -1,79 +1,85 @@
 
 {
   "$schema": "https://vega.github.io/schema/vega/v5.json",
-  "description": "NDIS participants by state and territory, December 2022",
-  "width": 440,
-  "height": 340,
-  "padding": 10,
+  "description": "Top 20 LGAs by NDIS participants in December 2022.",
+  "width": 600,
+  "height": 410,
+  "padding": {
+    "top": 15,
+    "bottom": 20,
+    "left": 15,
+    "right": 15
+  },
   "autosize": "pad",
   "background": "white",
 
-  "title": {
-    "text": "NDIS Participation Across Australia",
-    "subtitle": "Published participant counts, December 2022",
-    "anchor": "middle",
-    "fontSize": 15,
-    "subtitleFontSize": 10,
-    "offset": 12
-  },
+  "signals": [
+    {
+      "name": "selectedState",
+      "value": "All",
+      "bind": {
+        "input": "select",
+        "name": "State: ",
+        "options": [
+          "All",
+          "NSW",
+          "VIC",
+          "QLD",
+          "SA",
+          "WA",
+          "TAS",
+          "NT",
+          "ACT"
+        ]
+      }
+    },
+    {
+      "name": "zoom",
+      "value": 1,
+      "bind": {
+        "input": "range",
+        "name": "Zoom: ",
+        "min": 1,
+        "max": 5,
+        "step": 0.1
+      }
+    },
+    {
+      "name": "mapCenter",
+      "update": "selectedState === 'NSW' ? [147,-32] : selectedState === 'VIC' ? [145,-37] : selectedState === 'QLD' ? [145,-22] : selectedState === 'SA' ? [135,-30] : selectedState === 'WA' ? [122,-26] : selectedState === 'TAS' ? [146.5,-42] : selectedState === 'NT' ? [133,-20] : selectedState === 'ACT' ? [149.1,-35.3] : [133.5,-27]"
+    },
+    {
+      "name": "baseScale",
+      "update": "selectedState === 'All' ? 600 : selectedState === 'ACT' ? 30000 : selectedState === 'VIC' ? 2700 : selectedState === 'TAS' ? 4300 : selectedState === 'NSW' ? 1300 : selectedState === 'QLD' ? 1150 : selectedState === 'SA' ? 1700 : selectedState === 'WA' ? 1150 : 1800"
+    }
+  ],
 
   "data": [
     {
-      "name": "state_totals",
-      "url": "Data/ndis_2026_clean.csv",
+      "name": "metrics",
+      "url": "Data/ndis_lga_bivariate.csv",
       "format": {
         "type": "csv",
         "parse": {
-          "report_date": "string",
-          "state": "string",
-          "participants": "string"
+          "lga_code": "string",
+          "participants_2022": "number",
+          "participants_2025": "number",
+          "pct_change": "number",
+          "longitude": "number",
+          "latitude": "number"
         }
       },
       "transform": [
         {
-          "type": "filter",
-          "expr": "datum.report_date === '2022-12-31'"
-        },
-        {
-          "type": "filter",
-          "expr": "indexof(['NSW','VIC','QLD','SA','WA','TAS','NT','ACT','New South Wales','Victoria','Queensland','South Australia','Western Australia','Tasmania','Northern Territory','Australian Capital Territory'], datum.state) >= 0"
-        },
-        {
-          "type": "filter",
-          "expr": "datum.participants != null && datum.participants !== '' && datum.participants !== '<11'"
-        },
-        {
           "type": "formula",
-          "expr": "toNumber(datum.participants)",
-          "as": "count"
-        },
-        {
-          "type": "filter",
-          "expr": "isValid(datum.count) && isFinite(datum.count) && datum.count >= 0"
-        },
-        {
-          "type": "formula",
-          "expr": "datum.state === 'NSW' ? 'New South Wales' : datum.state === 'VIC' ? 'Victoria' : datum.state === 'QLD' ? 'Queensland' : datum.state === 'SA' ? 'South Australia' : datum.state === 'WA' ? 'Western Australia' : datum.state === 'TAS' ? 'Tasmania' : datum.state === 'NT' ? 'Northern Territory' : datum.state === 'ACT' ? 'Australian Capital Territory' : datum.state",
-          "as": "state_full"
-        },
-        {
-          "type": "aggregate",
-          "groupby": ["state_full"],
-          "fields": ["count"],
-          "ops": ["sum"],
-          "as": ["participants_total"]
-        },
-        {
-          "type": "formula",
-          "expr": "datum.state_full",
-          "as": "state"
+          "as": "lga_code",
+          "expr": "toString(datum.lga_code)"
         }
       ]
     },
-
     {
-      "name": "boundaries",
-      "url": "Data/state_2021.json",
+      "name": "areas",
+      "url": "Data/lga_2021.json",
       "format": {
         "type": "topojson",
         "feature": "LGA_2021_AUST_GDA94"
@@ -81,79 +87,48 @@
       "transform": [
         {
           "type": "formula",
-          "expr": "datum.properties.STE_NAME21",
-          "as": "state"
-        }
-      ]
-    },
-
-    {
-      "name": "symbols",
-      "values": [
-        {
-          "state": "New South Wales",
-          "longitude": 147.0,
-          "latitude": -32.2
+          "as": "lga_code",
+          "expr": "toString(datum.properties.LGA_CODE21)"
         },
-        {
-          "state": "Victoria",
-          "longitude": 143.5,
-          "latitude": -37.5
-        },
-        {
-          "state": "Queensland",
-          "longitude": 145.0,
-          "latitude": -22.5
-        },
-        {
-          "state": "South Australia",
-          "longitude": 135.8,
-          "latitude": -30.0
-        },
-        {
-          "state": "Western Australia",
-          "longitude": 121.0,
-          "latitude": -26.0
-        },
-        {
-          "state": "Tasmania",
-          "longitude": 146.5,
-          "latitude": -42.1
-        },
-        {
-          "state": "Northern Territory",
-          "longitude": 133.5,
-          "latitude": -19.5
-        },
-        {
-          "state": "Australian Capital Territory",
-          "longitude": 150.0,
-          "latitude": -35.5
-        }
-      ],
-      "transform": [
         {
           "type": "lookup",
-          "from": "state_totals",
-          "key": "state",
-          "fields": ["state"],
-          "values": ["participants_total"],
-          "as": ["participants_total"]
+          "from": "metrics",
+          "key": "lga_code",
+          "fields": ["lga_code"],
+          "values": [
+            "lga",
+            "state",
+            "participants_2022"
+          ],
+          "as": [
+            "lga",
+            "state",
+            "participants_2022"
+          ]
         },
         {
           "type": "filter",
-          "expr": "isValid(datum.participants_total) && datum.participants_total > 0"
+          "expr": "selectedState === 'All' || datum.state === selectedState || datum.properties.STE_NAME21 === ({'NSW':'New South Wales','VIC':'Victoria','QLD':'Queensland','SA':'South Australia','WA':'Western Australia','TAS':'Tasmania','NT':'Northern Territory','ACT':'Australian Capital Territory'}[selectedState])"
+        }
+      ]
+    },
+    {
+      "name": "rankedPoints",
+      "source": "metrics",
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "isValid(datum.participants_2022) && datum.participants_2022 > 0 && isValid(datum.longitude) && isValid(datum.latitude) && (selectedState === 'All' || datum.state === selectedState)"
         },
         {
           "type": "geopoint",
-          "projection": "aus_projection",
+          "projection": "aus",
           "fields": ["longitude", "latitude"],
           "as": ["x", "y"]
         },
         {
-          "type": "formula",
-          "expr": "{'State': datum.state, 'Published NDIS participants': format(datum.participants_total, ',.0f')}",
-          "as": "tooltip_text"
+          "type": "filter",
+          "expr": "isValid(datum.x) && isValid(datum.y)"
         }
       ]
     }
@@ -161,175 +136,109 @@
 
   "projections": [
     {
-      "name": "aus_projection",
+      "name": "aus",
       "type": "mercator",
-      "fit": {
-        "signal": "data('boundaries')"
-      },
-      "size": [
-        {
-          "signal": "width"
-        },
-        {
-          "signal": "height"
-        }
+      "center": {"signal": "mapCenter"},
+      "scale": {"signal": "baseScale * zoom"},
+      "translate": [
+        {"signal": "width / 2"},
+        {"signal": "height / 2"}
       ]
     }
   ],
 
   "scales": [
     {
-      "name": "bubble_size",
-      "type": "sqrt",
+      "name": "bubble",
+      "type": "linear",
       "domain": {
-        "data": "state_totals",
-        "field": "participants_total"
+        "data": "rankedPoints",
+        "field": "participants_2022"
       },
-      "range": [35, 850],
+      "domainMin": 0,
+      "range": [8, 650],
       "zero": true
-    }
-  ],
-
-  "legends": [
-    {
-      "size": "bubble_size",
-      "title": "NDIS Participants",
-      "orient": "bottom",
-      "direction": "horizontal",
-      "symbolFillColor": "#3182bd",
-      "symbolStrokeColor": "#08519c",
-      "symbolOpacity": 0.7,
-      "format": ",.0s",
-      "titleFontSize": 11,
-      "labelFontSize": 10,
-      "columns": 3,
-      "offset": 12
     }
   ],
 
   "marks": [
     {
       "type": "shape",
-      "name": "australia_map",
-      "from": {
-        "data": "boundaries"
-      },
-      "interactive": false,
+      "from": {"data": "areas"},
       "transform": [
         {
           "type": "geoshape",
-          "projection": "aus_projection"
+          "projection": "aus"
         }
       ],
       "encode": {
         "update": {
-          "fill": {
-            "value": "#e8eef4"
-          },
-          "stroke": {
-            "value": "#ffffff"
-          },
-          "strokeWidth": {
-            "value": 0.7
-          }
-        }
-      }
-    },
-
-    {
-      "type": "symbol",
-      "name": "ndis_bubbles",
-      "from": {
-        "data": "symbols"
-      },
-      "interactive": true,
-      "encode": {
-        "enter": {
-          "shape": {
-            "value": "circle"
-          },
-          "cursor": {
-            "value": "pointer"
-          }
-        },
-        "update": {
-          "x": {
-            "field": "x"
-          },
-          "y": {
-            "field": "y"
-          },
-          "size": {
-            "scale": "bubble_size",
-            "field": "participants_total"
-          },
-          "fill": {
-            "value": "#3182bd"
-          },
-          "fillOpacity": {
-            "value": 0.7
-          },
-          "stroke": {
-            "value": "#08519c"
-          },
-          "strokeWidth": {
-            "value": 1
-          },
+          "fill": {"value": "#e5e9ed"},
+          "stroke": {"value": "#ffffff"},
+          "strokeWidth": {"value": 0.5},
           "tooltip": {
-            "field": "tooltip_text"
+            "signal": "{'LGA': datum.lga || datum.properties.LGA_NAME21, 'State': datum.state || datum.properties.STE_NAME21, 'NDIS participants (2022)': isValid(datum.participants_2022) ? format(datum.participants_2022, ',') : 'Data unavailable'}"
           }
         },
         "hover": {
-          "fillOpacity": {
-            "value": 1
-          },
-          "strokeWidth": {
-            "value": 2
-          }
+          "fill": {"value": "#cbd5e1"},
+          "stroke": {"value": "#254b70"},
+          "strokeWidth": {"value": 1.2}
         }
       }
     },
-
     {
       "type": "symbol",
-      "name": "hover_targets",
-      "from": {
-        "data": "symbols"
-      },
-      "interactive": true,
+      "from": {"data": "rankedPoints"},
       "encode": {
-        "enter": {
-          "shape": {
-            "value": "circle"
+        "update": {
+          "x": {"field": "x"},
+          "y": {"field": "y"},
+          "size": {
+            "scale": "bubble",
+            "field": "participants_2022"
           },
-          "cursor": {
-            "value": "pointer"
+          "shape": {"value": "circle"},
+          "fill": {"value": "#236b8e"},
+          "fillOpacity": {"value": 0.55},
+          "stroke": {"value": "#164665"},
+          "strokeWidth": {"value": 0.8},
+          "tooltip": {
+            "signal": "{'Rank': datum.rank, 'LGA': datum.lga, 'State': datum.state, 'NDIS participants (2022)': format(datum.participants_2022, ',')}"
           }
         },
-        "update": {
-          "x": {
-            "field": "x"
-          },
-          "y": {
-            "field": "y"
-          },
-          "size": {
-            "signal": "max(450, scale('bubble_size', datum.participants_total))"
-          },
-          "fill": {
-            "value": "#3182bd"
-          },
-          "fillOpacity": {
-            "value": 0
-          },
-          "strokeOpacity": {
-            "value": 0
-          },
-          "tooltip": {
-            "field": "tooltip_text"
-          }
+        "hover": {
+          "fill": {"value": "#104c74"},
+          "fillOpacity": {"value": 0.85},
+          "strokeWidth": {"value": 1.5}
         }
       }
     }
-  ]
+  ],
+
+  "legends": [
+    {
+      "size": "bubble",
+      "orient": "bottom",
+      "title": "NDIS participants",
+      "format": ",.0f",
+      "symbolFillColor": "#236b8e",
+      "symbolFillOpacity": 0.55,
+      "symbolStrokeColor": "#164665",
+      "symbolCount": 4
+    }
+  ],
+
+  "config": {
+    "legend": {
+      "labelFont": "Arial",
+      "titleFont": "Arial",
+      "labelFontSize": 11,
+      "titleFontSize": 12,
+      "padding": 10
+    }
+  }
 }
+
+
+

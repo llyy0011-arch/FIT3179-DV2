@@ -3,12 +3,19 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "description": "Main reasons for unmet GP needs among people with disability in Australia, 2022.",
   "title": {
-    "text": "Barriers to GP Care Among People with Disability",
-    "subtitle": "Main reason for unmet GP need, Australia, 2022 (%)",
+    "text": "Waiting Time Is the Leading Barrier to GP Care",
+    "subtitle": [
+      "Main reason for unmet GP need among people with disability, Australia, 2022 (%)",
+      "Select a disability group to explore differences in reported barriers."
+    ],
     "anchor": "start",
+    "font": "Arial",
     "fontSize": 19,
-    "subtitleFontSize": 13,
-    "offset": 18
+    "fontWeight": "bold",
+    "subtitleFont": "Arial",
+    "subtitleFontSize": 12,
+    "subtitleColor": "#64748B",
+    "offset": 22
   },
   "data": {
     "url": "Data/GPBarriers.csv",
@@ -19,17 +26,17 @@
       }
     }
   },
-  "width": 720,
-  "height": 380,
+  "width": 690,
+  "height": 345,
   "autosize": {
     "type": "pad",
     "contains": "padding"
   },
   "padding": {
     "left": 15,
-    "right": 55,
-    "top": 15,
-    "bottom": 15
+    "right": 70,
+    "top": 20,
+    "bottom": 20
   },
   "params": [
     {
@@ -45,8 +52,7 @@
           "Sensory or speech",
           "Learning and understanding",
           "Physical",
-          "Psychosocial",
-          "Other"
+          "Psychosocial"
         ],
         "labels": [
           "All persons",
@@ -55,8 +61,7 @@
           "Sensory or speech",
           "Learning and understanding",
           "Physical",
-          "Psychosocial",
-          "Other disability group"
+          "Psychosocial"
         ]
       }
     }
@@ -69,8 +74,16 @@
       "filter": "datum.Reason !== 'Total' && isValid(datum.Percentage)"
     },
     {
-      "calculate": "datum.Reason === 'Waiting time too long / unavailable' ? 'Long waiting time' : datum.Reason === 'Transport or distance / physical access / language' ? 'Transport / access / language' : datum.Reason === 'Other (incl. upcoming appointment)' ? 'Other reasons' : datum.Reason",
+      "calculate": "datum.Reason === 'Waiting time too long / unavailable' ? 'Long waiting time' : datum.Reason === 'Transport or distance / physical access / language' || datum.Reason === 'transport or distance / physical access / language' ? 'Transport / access' : datum.Reason === 'Other (incl. upcoming appointment)' ? 'Other reasons' : datum.Reason",
       "as": "ShortReason"
+    },
+    {
+      "calculate": "datum.ShortReason === 'Long waiting time' ? 1 : datum.ShortReason === 'Other reasons' ? 2 : datum.ShortReason === 'Too busy' ? 3 : datum.ShortReason === 'Cost' ? 4 : datum.ShortReason === 'Dislike or fear' ? 5 : 6",
+      "as": "ReasonOrder"
+    },
+    {
+      "calculate": "datum.ShortReason === 'Long waiting time'",
+      "as": "IsLeadingBarrier"
     }
   ],
   "encoding": {
@@ -78,11 +91,16 @@
       "field": "ShortReason",
       "type": "nominal",
       "title": null,
-      "sort": "-x",
+      "sort": {
+        "field": "ReasonOrder",
+        "order": "ascending"
+      },
       "axis": {
-        "labelFontSize": 13,
-        "labelLimit": 300,
-        "labelPadding": 12
+        "labelFontSize": 12,
+        "labelLimit": 200,
+        "labelPadding": 12,
+        "ticks": false,
+        "domain": false
       }
     },
     "x": {
@@ -94,9 +112,13 @@
       },
       "axis": {
         "grid": true,
-        "labelFontSize": 12,
-        "titleFontSize": 13,
-        "tickCount": 7
+        "gridColor": "#E8EDF2",
+        "gridWidth": 1,
+        "labelFontSize": 11,
+        "titleFontSize": 12,
+        "titlePadding": 12,
+        "tickCount": 7,
+        "domain": false
       }
     },
     "tooltip": [
@@ -127,8 +149,8 @@
     {
       "mark": {
         "type": "rule",
-        "color": "#9CB7C9",
-        "strokeWidth": 3
+        "strokeWidth": 3,
+        "opacity": 0.75
       },
       "encoding": {
         "x": {
@@ -136,6 +158,13 @@
         },
         "x2": {
           "field": "Percentage"
+        },
+        "color": {
+          "condition": {
+            "test": "datum.IsLeadingBarrier",
+            "value": "#E69A55"
+          },
+          "value": "#A9C2D1"
         }
       }
     },
@@ -143,10 +172,18 @@
       "mark": {
         "type": "point",
         "filled": true,
-        "size": 180,
-        "color": "#1877A3",
+        "size": 145,
         "stroke": "white",
-        "strokeWidth": 1
+        "strokeWidth": 1.2
+      },
+      "encoding": {
+        "color": {
+          "condition": {
+            "test": "datum.IsLeadingBarrier",
+            "value": "#DB7B32"
+          },
+          "value": "#4F91B2"
+        }
       }
     },
     {
@@ -155,14 +192,42 @@
         "align": "left",
         "baseline": "middle",
         "dx": 12,
-        "fontSize": 13,
-        "color": "#34495E"
+        "fontSize": 12
       },
       "encoding": {
         "text": {
           "field": "Percentage",
           "type": "quantitative",
           "format": ".1f"
+        },
+        "color": {
+          "condition": {
+            "test": "datum.IsLeadingBarrier",
+            "value": "#B85B21"
+          },
+          "value": "#34495E"
+        }
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum.IsLeadingBarrier"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "bottom",
+        "dx": 12,
+        "dy": -13,
+        "fontSize": 11,
+        "fontWeight": "bold",
+        "color": "#B85B21"
+      },
+      "encoding": {
+        "text": {
+          "value": "Most reported barrier"
         }
       }
     }

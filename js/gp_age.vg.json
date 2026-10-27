@@ -1,13 +1,15 @@
 
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Small multiples dot plot of unmet GP care reasons by age group, Australia, 2022.",
+  "description": "Waiting time and cost as reasons for unmet GP needs across age groups, Australia, 2022.",
   "title": {
-    "text": "How Do Barriers to GP Care Differ by Age?",
-    "subtitle": "Main reasons for unmet GP need among people with disability, 2022 (%)",
+    "text": "How Do Waiting Time and Cost Barriers Vary by Age?",
+    "subtitle": "Selected main reasons for unmet GP need among people with disability, Australia, 2022 (%)",
     "anchor": "start",
+    "font": "Arial",
     "fontSize": 19,
-    "subtitleFontSize": 13,
+    "subtitleFontSize": 12,
+    "subtitleColor": "#64748B",
     "offset": 20
   },
   "data": {
@@ -24,10 +26,13 @@
       "filter": "datum.Characteristic === 'Age group'"
     },
     {
-      "filter": "datum.Reason !== 'Total' && isValid(datum.Percentage)"
+      "filter": "datum.Reason === 'Waiting time too long / unavailable' || datum.Reason === 'Cost'"
     },
     {
-      "calculate": "datum.Reason === 'Waiting time too long / unavailable' ? 'Waiting time' : datum.Reason === 'Transport or distance / physical access / language' ? 'Transport / access' : datum.Reason === 'Other (incl. upcoming appointment)' ? 'Other reasons' : datum.Reason",
+      "filter": "isValid(datum.Percentage)"
+    },
+    {
+      "calculate": "datum.Reason === 'Waiting time too long / unavailable' ? 'Long waiting time' : 'Cost'",
       "as": "ShortReason"
     }
   ],
@@ -51,77 +56,139 @@
   "columns": 2,
   "spec": {
     "width": 310,
-    "height": 220,
-    "mark": {
-      "type": "point",
-      "filled": true,
-      "size": 140,
-      "color": "#237BA3",
-      "opacity": 0.9
-    },
-    "encoding": {
-      "x": {
-        "field": "Percentage",
-        "type": "quantitative",
-        "title": "Percentage (%)",
-        "scale": {
-          "domain": [0, 55],
-          "zero": true
+    "height": 135,
+    "layer": [
+      {
+        "mark": {
+          "type": "point",
+          "filled": true,
+          "size": 170,
+          "opacity": 0.95
         },
-        "axis": {
-          "grid": true,
-          "tickCount": 6,
-          "labelFontSize": 11,
-          "titleFontSize": 12
+        "encoding": {
+          "x": {
+            "field": "Percentage",
+            "type": "quantitative",
+            "title": "Percentage (%)",
+            "scale": {
+              "domain": [0, 55],
+              "zero": true
+            },
+            "axis": {
+              "grid": true,
+              "gridColor": "#E8EDF2",
+              "tickCount": 6,
+              "labelFontSize": 11,
+              "titleFontSize": 12
+            }
+          },
+          "y": {
+            "field": "ShortReason",
+            "type": "nominal",
+            "title": null,
+            "sort": [
+              "Long waiting time",
+              "Cost"
+            ],
+            "axis": {
+              "labelFontSize": 12,
+              "labelLimit": 150,
+              "labelPadding": 10,
+              "ticks": false,
+              "domain": false
+            }
+          },
+          "color": {
+            "field": "ShortReason",
+            "type": "nominal",
+            "scale": {
+              "domain": [
+                "Long waiting time",
+                "Cost"
+              ],
+              "range": [
+                "#DB7B32",
+                "#237BA3"
+              ]
+            },
+            "legend": null
+          },
+          "tooltip": [
+            {
+              "field": "Population group",
+              "type": "nominal",
+              "title": "Age group"
+            },
+            {
+              "field": "Reason",
+              "type": "nominal",
+              "title": "Reason"
+            },
+            {
+              "field": "Percentage",
+              "type": "quantitative",
+              "title": "Percentage (%)",
+              "format": ".1f"
+            },
+            {
+              "field": "CI",
+              "type": "nominal",
+              "title": "95% CI"
+            }
+          ]
         }
       },
-      "y": {
-        "field": "ShortReason",
-        "type": "nominal",
-        "title": null,
-        "sort": [
-          "Waiting time",
-          "Other reasons",
-          "Too busy",
-          "Cost",
-          "Dislike or fear",
-          "Transport / access"
-        ],
-        "axis": {
-          "labelFontSize": 11,
-          "labelLimit": 145,
-          "labelPadding": 8
+      {
+        "mark": {
+          "type": "text",
+          "align": "left",
+          "baseline": "middle",
+          "dx": 11,
+          "fontSize": 12,
+          "fontWeight": "bold"
+        },
+        "encoding": {
+          "x": {
+            "field": "Percentage",
+            "type": "quantitative"
+          },
+          "y": {
+            "field": "ShortReason",
+            "type": "nominal",
+            "sort": [
+              "Long waiting time",
+              "Cost"
+            ]
+          },
+          "text": {
+            "field": "Percentage",
+            "type": "quantitative",
+            "format": ".1f"
+          },
+          "color": {
+            "field": "ShortReason",
+            "type": "nominal",
+            "scale": {
+              "domain": [
+                "Long waiting time",
+                "Cost"
+              ],
+              "range": [
+                "#B85B21",
+                "#176489"
+              ]
+            },
+            "legend": null
+          }
         }
-      },
-      "tooltip": [
-        {
-          "field": "Population group",
-          "type": "nominal",
-          "title": "Age group"
-        },
-        {
-          "field": "Reason",
-          "type": "nominal",
-          "title": "Reason"
-        },
-        {
-          "field": "Percentage",
-          "type": "quantitative",
-          "title": "Percentage (%)",
-          "format": ".1f"
-        },
-        {
-          "field": "CI",
-          "type": "nominal",
-          "title": "95% CI"
-        }
-      ]
-    }
+      }
+    ]
   },
   "resolve": {
     "scale": {
       "x": "shared",
-      "y": "shared"
+      "y": "shared",
+      "color": "shared"
     }
   },
   "config": {
@@ -130,7 +197,7 @@
       "stroke": null
     },
     "facet": {
-      "spacing": 30
+      "spacing": 35
     },
     "axis": {
       "labelColor": "#34495E",

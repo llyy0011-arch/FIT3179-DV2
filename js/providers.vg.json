@@ -1,0 +1,387 @@
+
+{
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "background": "white",
+  "width": 850,
+  "height": 510,
+  "padding": {
+    "top": 70,
+    "left": 25,
+    "right": 30,
+    "bottom": 40
+  },
+  "autosize": "pad",
+  "title": {
+    "text": "Who Provides Essential Disability Assistance?",
+    "subtitle": [
+      "Formal and informal assistance across six activities, Australia, 2022",
+      "People with profound or severe core activity limitation"
+    ],
+    "anchor": "start",
+    "font": "Arial",
+    "fontSize": 21,
+    "fontWeight": "bold",
+    "subtitleFontSize": 12,
+    "subtitleColor": "#64748B",
+    "offset": 25
+  },
+  "signals": [
+    {
+      "name": "hoveredActivity",
+      "value": null,
+      "on": [
+        {
+          "events": "@ribbons:mouseover",
+          "update": "datum.Activity"
+        },
+        {
+          "events": "@ribbons:mouseout",
+          "update": "null"
+        }
+      ]
+    }
+  ],
+  "data": [
+    {
+      "name": "connections",
+      "url": "Data/providers.csv",
+      "format": {
+        "type": "csv",
+        "parse": "auto"
+      },
+      "transform": [
+        {
+          "type": "fold",
+          "fields": [
+            "Self-care",
+            "Mobility",
+            "Communication",
+            "Cognitive or emotional tasks",
+            "Health care",
+            "Meal preparation"
+          ],
+          "as": ["Activity", "Proportion"]
+        },
+        {
+          "type": "formula",
+          "as": "Provider",
+          "expr": "indexof(lower(datum['Provider type']), 'informal') >= 0 ? 'Informal' : 'Formal'"
+        },
+        {
+          "type": "formula",
+          "as": "Proportion",
+          "expr": "toNumber(datum.Proportion)"
+        },
+        {
+          "type": "filter",
+          "expr": "isValid(datum.Proportion) && datum.Proportion >= 0"
+        },
+        {
+          "type": "formula",
+          "as": "activityIndex",
+          "expr": "indexof(['Self-care','Mobility','Communication','Cognitive or emotional tasks','Health care','Meal preparation'], datum.Activity)"
+        },
+        {
+          "type": "formula",
+          "as": "sourceY",
+          "expr": "datum.Provider === 'Informal' ? 150 : 365"
+        },
+        {
+          "type": "formula",
+          "as": "targetY",
+          "expr": "55 + datum.activityIndex * 82 + (datum.Provider === 'Informal' ? -8 : 8)"
+        },
+        {
+          "type": "formula",
+          "as": "lineWidth",
+          "expr": "max(1, datum.Proportion * 0.28)"
+        },
+        {
+          "type": "formula",
+          "as": "curvePath",
+          "expr": "'M 165,' + datum.sourceY + ' C 350,' + datum.sourceY + ' 450,' + datum.targetY + ' 625,' + datum.targetY"
+        }
+      ]
+    },
+    {
+      "name": "providers",
+      "values": [
+        {
+          "Provider": "Informal",
+          "y": 150,
+          "color": "#176489"
+        },
+        {
+          "Provider": "Formal",
+          "y": 365,
+          "color": "#D88FAE"
+        }
+      ]
+    },
+    {
+      "name": "activities",
+      "values": [
+        {
+          "Activity": "Self-care",
+          "y": 55
+        },
+        {
+          "Activity": "Mobility",
+          "y": 137
+        },
+        {
+          "Activity": "Communication",
+          "y": 219
+        },
+        {
+          "Activity": "Cognitive or emotional tasks",
+          "y": 301
+        },
+        {
+          "Activity": "Health care",
+          "y": 383
+        },
+        {
+          "Activity": "Meal preparation",
+          "y": 465
+        }
+      ]
+    }
+  ],
+  "marks": [
+    {
+      "type": "path",
+      "name": "ribbons",
+      "from": {
+        "data": "connections"
+      },
+      "encode": {
+        "enter": {
+          "path": {
+            "field": "curvePath"
+          },
+          "fill": {
+            "value": null
+          },
+          "stroke": {
+            "signal": "datum.Provider === 'Informal' ? '#176489' : '#D88FAE'"
+          },
+          "strokeWidth": {
+            "field": "lineWidth"
+          },
+          "strokeCap": {
+            "value": "round"
+          },
+          "tooltip": {
+            "signal": "{'Provider': datum.Provider, 'Activity': datum.Activity, 'Proportion (%)': datum.Proportion}"
+          }
+        },
+        "update": {
+          "strokeOpacity": {
+            "signal": "hoveredActivity === null || hoveredActivity === datum.Activity ? 0.62 : 0.07"
+          }
+        },
+        "hover": {
+          "strokeOpacity": {
+            "value": 0.95
+          }
+        }
+      }
+    },
+    {
+      "type": "symbol",
+      "from": {
+        "data": "providers"
+      },
+      "encode": {
+        "enter": {
+          "x": {
+            "value": 165
+          },
+          "y": {
+            "field": "y"
+          },
+          "size": {
+            "value": 1000
+          },
+          "shape": {
+            "value": "circle"
+          },
+          "fill": {
+            "field": "color"
+          },
+          "stroke": {
+            "value": "white"
+          },
+          "strokeWidth": {
+            "value": 2
+          }
+        }
+      }
+    },
+    {
+      "type": "text",
+      "from": {
+        "data": "providers"
+      },
+      "encode": {
+        "enter": {
+          "x": {
+            "value": 128
+          },
+          "y": {
+            "field": "y"
+          },
+          "text": {
+            "field": "Provider"
+          },
+          "align": {
+            "value": "right"
+          },
+          "baseline": {
+            "value": "middle"
+          },
+          "font": {
+            "value": "Arial"
+          },
+          "fontSize": {
+            "value": 15
+          },
+          "fontWeight": {
+            "value": "bold"
+          },
+          "fill": {
+            "value": "#17364A"
+          }
+        }
+      }
+    },
+    {
+      "type": "symbol",
+      "from": {
+        "data": "activities"
+      },
+      "encode": {
+        "enter": {
+          "x": {
+            "value": 625
+          },
+          "y": {
+            "field": "y"
+          },
+          "size": {
+            "value": 300
+          },
+          "shape": {
+            "value": "circle"
+          },
+          "fill": {
+            "value": "#E3EFF4"
+          },
+          "stroke": {
+            "value": "#176489"
+          },
+          "strokeWidth": {
+            "value": 1.5
+          }
+        }
+      }
+    },
+    {
+      "type": "text",
+      "from": {
+        "data": "activities"
+      },
+      "encode": {
+        "enter": {
+          "x": {
+            "value": 650
+          },
+          "y": {
+            "field": "y"
+          },
+          "text": {
+            "field": "Activity"
+          },
+          "align": {
+            "value": "left"
+          },
+          "baseline": {
+            "value": "middle"
+          },
+          "font": {
+            "value": "Arial"
+          },
+          "fontSize": {
+            "value": 13
+          },
+          "fontWeight": {
+            "value": "bold"
+          },
+          "fill": {
+            "value": "#17364A"
+          }
+        }
+      }
+    },
+    {
+      "type": "text",
+      "encode": {
+        "enter": {
+          "x": {
+            "value": 0
+          },
+          "y": {
+            "value": -22
+          },
+          "text": {
+            "value": "ASSISTANCE PROVIDERS"
+          },
+          "font": {
+            "value": "Arial"
+          },
+          "fontSize": {
+            "value": 12
+          },
+          "fontWeight": {
+            "value": "bold"
+          },
+          "fill": {
+            "value": "#64748B"
+          }
+        }
+      }
+    },
+    {
+      "type": "text",
+      "encode": {
+        "enter": {
+          "x": {
+            "value": 625
+          },
+          "y": {
+            "value": -22
+          },
+          "text": {
+            "value": "ASSISTANCE ACTIVITIES"
+          },
+          "font": {
+            "value": "Arial"
+          },
+          "fontSize": {
+            "value": 12
+          },
+          "fontWeight": {
+            "value": "bold"
+          },
+          "fill": {
+            "value": "#64748B"
+          }
+        }
+      }
+    }
+  ],
+  "config": {
+    "font": "Arial"
+  }
+}
